@@ -4,9 +4,40 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Registration</title>
 </head>
 <body>
-
+<form action="SuccessRegistrate.jsp">
+<div>
+Please input the Description:&nbsp;<input type="text" id="Description" name="Description"/>
+</div>
+<div>
+Please input the Keyword:&nbsp;<input type="text" id="Keyword" name="Keyword"/>
+</div>
+<div>
+Please input the BeginTime:&nbsp;<input type="text" id="BeginTime" name="BeginTime"/>
+</div>
+<div>
+Please input the EndTime:&nbsp;<input type="text" id="EndTime" name="EndTime"/>
+</div>
+<div>
+Please input the SamplingTime:&nbsp;<input type="text" id="SamplingTime" name="SamplingTime"/>
+</div>
+<div>
+Please input the Easting:&nbsp;<input type="text" id="Easting" name="Easting"/>
+</div>
+<div>
+Please input the Northing:&nbsp;<input type="text" id="Northing" name="Northing"/>
+</div>
+<div>
+Please input the Altitude:&nbsp;<input type="text" id="Altitude" name="Altitude"/>
+</div>
+<div>
+Please input the ObservableProperty:&nbsp;<input type="text" id="ObservableProperty" name="ObservableProperty"/>
+</div>
+<div>
+Please input the UOM:&nbsp;<input type="text" id="UOM" name="UOM"/>
+</div>
+</form>
 </body>
 </html>
