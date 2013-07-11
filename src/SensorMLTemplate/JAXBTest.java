@@ -14,7 +14,7 @@ import javax.xml.bind.Marshaller;
 public class JAXBTest {
 
 	public static void main(String[] args) throws JAXBException, IOException {
-		 Sensor sensor = new Sensor();
+		 TagSensorML sensorML = new TagSensorML();
 		 TagMember member = new TagMember();
 		 TagSystem system = new TagSystem();
 		 
@@ -107,15 +107,15 @@ public class JAXBTest {
 		 
 		 
 		 member.setSystem(system);
-		 sensor.setMember(member);
+		 sensorML.setMember(member);
 
 		 
 		 
-	     JAXBContext context = JAXBContext.newInstance(sensor.getClass());
+	     JAXBContext context = JAXBContext.newInstance(sensorML.getClass());
 	     Marshaller m = context.createMarshaller();
 	     m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 	     StringWriter sw = new StringWriter();
-	     m.marshal(sensor,sw);
+	     m.marshal(sensorML,sw);
 	     OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream("src/SensorMLTemplate/Test.xml"));
 	     out.write(sw.toString());
 	     out.flush();

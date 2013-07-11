@@ -9,34 +9,37 @@
 <body>
 <form action="SuccessRegistrate.jsp">
 <div>
-Please input the Description:&nbsp;<input type="text" id="Description" name="Description"/>
+Please input the SensorID:<input type="text" id="sensorID" name="sensorID"/>
 </div>
 <div>
-Please input the Keyword:&nbsp;<input type="text" id="Keyword" name="Keyword"/>
+Please input the Description:&nbsp;<input type="text" id="description" name="description"/>
 </div>
 <div>
-Please input the BeginTime:&nbsp;<input type="text" id="BeginTime" name="BeginTime"/>
+Please input the Keyword:&nbsp;<input type="text" id="keyword" name="keyword"/>
 </div>
 <div>
-Please input the EndTime:&nbsp;<input type="text" id="EndTime" name="EndTime"/>
+Please input the BeginTime:&nbsp;<input type="text" id="beginTime" name="beginTime"/>
 </div>
 <div>
-Please input the SamplingTime:&nbsp;<input type="text" id="SamplingTime" name="SamplingTime"/>
+Please input the EndTime:&nbsp;<input type="text" id="endTime" name="endTime"/>
 </div>
 <div>
-Please input the Easting:&nbsp;<input type="text" id="Easting" name="Easting"/>
+Please input the SamplingTime:&nbsp;<input type="text" id="samplingTime" name="samplingTime"/>
 </div>
 <div>
-Please input the Northing:&nbsp;<input type="text" id="Northing" name="Northing"/>
+Please input the Easting:&nbsp;<input type="text" id="easting" name="easting"/>
 </div>
 <div>
-Please input the Altitude:&nbsp;<input type="text" id="Altitude" name="Altitude"/>
+Please input the Northing:&nbsp;<input type="text" id="northing" name="northing"/>
 </div>
 <div>
-Please input the ObservableProperty:&nbsp;<input type="text" id="ObservableProperty" name="ObservableProperty"/>
+Please input the Altitude:&nbsp;<input type="text" id="altitude" name="altitude"/>
 </div>
 <div>
-Please input the UOM:&nbsp;<input type="text" id="UOM" name="UOM"/>
+Please input the ObservableProperty:&nbsp;<input type="text" id="observableProperty" name="observableProperty"/>
+</div>
+<div>
+Please input the UOM:&nbsp;<input type="text" id="uom" name="uom"/>
 </div>
 </form>
 </body>

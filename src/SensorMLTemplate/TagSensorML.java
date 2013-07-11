@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="sml:SensorML")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Sensor {
+public class TagSensorML {
 	@XmlElement(name="sml:member")
 	private TagMember member;
 
