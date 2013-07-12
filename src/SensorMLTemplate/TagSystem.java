@@ -20,7 +20,8 @@ public class TagSystem {
 	private TagCapabilities capabilites;
 	@XmlElement(name="sml:position")
 	private TagPosition position;
-	
+	@XmlElement(name="sml:input")
+	private TagInput input;
 	
 	
 	public TagIdentification getIdentification() {
@@ -69,5 +70,13 @@ public class TagSystem {
 
 	public void setPosition(TagPosition position) {
 		this.position = position;
+	}
+
+	public TagInput getInput() {
+		return input;
+	}
+
+	public void setInput(TagInput input) {
+		this.input = input;
 	}
 }

@@ -11,9 +11,12 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-public class JAXBTest {
+import org.apache.log4j.Logger;
 
+public class JAXBTest {
+	private static Logger logger = Logger.getLogger(JAXBTest.class);
 	public static void main(String[] args) throws JAXBException, IOException {
+		 logger.info("Start to Test!");
 		 TagSensorML sensorML = new TagSensorML();
 		 TagMember member = new TagMember();
 		 TagSystem system = new TagSystem();
@@ -95,7 +98,10 @@ public class JAXBTest {
 		 position.setPosition(sweposition);
 		 position.setName("sensorPosition");
 		 
-		 
+		 //Sixth Part
+		 TagObservableProperty observableProperty = new TagObservableProperty();
+		 List<TagObservableProperty> inputs = new ArrayList<TagObservableProperty>();
+		 TagInput input = new TagInput();
 		 
 		 
 		 system.setDescripition("A sensor in the Sensor Bus");

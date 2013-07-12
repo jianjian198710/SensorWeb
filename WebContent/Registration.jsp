@@ -7,40 +7,41 @@
 <title>Registration</title>
 </head>
 <body>
-<form action="SuccessRegistrate.jsp">
+<form action="Controller">
 <div>
-Please input the SensorID:<input type="text" id="sensorID" name="sensorID"/>
+<label>Please input the SensorID:</label><input type="text" id="sensorID" name="sensorID"/>
 </div>
 <div>
-Please input the Description:&nbsp;<input type="text" id="description" name="description"/>
+<label>Please input the Description:</label><input type="text" id="description" name="description"/>
 </div>
 <div>
-Please input the Keyword:&nbsp;<input type="text" id="keyword" name="keyword"/>
+<label>Please input the Keyword:</label><input type="text" id="keyword" name="keyword"/>
 </div>
 <div>
-Please input the BeginTime:&nbsp;<input type="text" id="beginTime" name="beginTime"/>
+<label>Please input the BeginTime:</label><input type="text" id="beginTime" name="beginTime"/>
 </div>
 <div>
-Please input the EndTime:&nbsp;<input type="text" id="endTime" name="endTime"/>
+<label>Please input the EndTime:</label><input type="text" id="endTime" name="endTime"/>
 </div>
 <div>
-Please input the SamplingTime:&nbsp;<input type="text" id="samplingTime" name="samplingTime"/>
+<label>Please input the SamplingTime:</label><input type="text" id="samplingTime" name="samplingTime"/>
 </div>
 <div>
-Please input the Easting:&nbsp;<input type="text" id="easting" name="easting"/>
+<label>Please input the Easting</label><input type="text" id="easting" name="easting"/>
 </div>
 <div>
-Please input the Northing:&nbsp;<input type="text" id="northing" name="northing"/>
+<label>Please input the Northing:</label><input type="text" id="northing" name="northing"/>
 </div>
 <div>
-Please input the Altitude:&nbsp;<input type="text" id="altitude" name="altitude"/>
+<label>Please input the Altitude:</label><input type="text" id="altitude" name="altitude"/>
 </div>
 <div>
-Please input the ObservableProperty:&nbsp;<input type="text" id="observableProperty" name="observableProperty"/>
+<label>Please input the ObservableProperty:</label><input type="text" id="observableProperty" name="observableProperty"/>
 </div>
 <div>
-Please input the UOM:&nbsp;<input type="text" id="uom" name="uom"/>
+<label>Please input the UOM:</label><input type="text" id="uom" name="uom"/>
 </div>
+<input type="submit" name="regist" value="submit" />
 </form>
 </body>
 </html>

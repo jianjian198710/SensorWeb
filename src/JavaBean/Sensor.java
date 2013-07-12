@@ -13,10 +13,11 @@ public class Sensor {
 	private String altitude;
 	private String observableProperty;
 	private String uom;
-	private String data;
 	
+	//Not show in SensorML
 	//show whether the senor is start
 	private boolean start;
+	private String data;
 	
 	public String getSensorID() {
 		return sensorID;
