@@ -64,6 +64,7 @@ public class JAXBTest {
 		 TagPosition position = new TagPosition();
 		 TagswePosition sweposition = new TagswePosition();
 		 TagLocation location = new TagLocation();
+		 TagVector vector = new TagVector();
 		 List<TagCoordinate> coordinates = new ArrayList<TagCoordinate>();
 		 TagCoordinate coordinate = new TagCoordinate();
 		 TagCoordinate coordinate2 = new TagCoordinate();
@@ -91,8 +92,9 @@ public class JAXBTest {
 		 coordinates.add(coordinate);
 		 coordinates.add(coordinate2);
 		 coordinates.add(coordinate3);
-		 location.setCoordinates(coordinates);
-//		 location.setGmlid("STATION_LOCATION");
+		 vector.setCoordinates(coordinates);
+		 vector.setGmlid("STATION_LOCATION");
+		 location.setVector(vector);
 		 sweposition.setLocation(location);
 		 sweposition.setReferenceFrame("urn:ogc:def:crs:EPSG:4326");
 		 position.setPosition(sweposition);
@@ -100,9 +102,24 @@ public class JAXBTest {
 		 
 		 //Sixth Part
 		 TagObservableProperty observableProperty = new TagObservableProperty();
-		 List<TagObservableProperty> inputs = new ArrayList<TagObservableProperty>();
+		 List<TagInput> inputsList = new ArrayList<TagInput>();
 		 TagInput input = new TagInput();
+		 TagInputs inputs = new TagInputs();
+		 observableProperty.setDefinition("temperature");
+		 input.setObservableProperty(observableProperty);
+		 inputsList.add(input);
+		 inputs.setInput(inputsList);
 		 
+		 //SeventhPart
+		 TagUom uom3 = new TagUom();
+		 TagOutput output = new TagOutput();
+		 List<TagOutput> outputsList = new ArrayList<TagOutput>();
+		 TagOutputs outputs = new TagOutputs();
+		 uom3.setCode("degree");
+		 output.setUom(uom3);
+		 output.setName("temperature");
+		 outputsList.add(output);
+		 outputs.setOutputs(outputsList);
 		 
 		 system.setDescripition("A sensor in the Sensor Bus");
 		 system.setKeywords(keyWords);
@@ -110,13 +127,12 @@ public class JAXBTest {
 		 system.setValidTime(validTime);
 		 system.setCapabilites(capabilities);
 		 system.setPosition(position);
-		 
+		 system.setInputs(inputs);
+		 system.setOuputs(outputs);
 		 
 		 member.setSystem(system);
 		 sensorML.setMember(member);
 
-		 
-		 
 	     JAXBContext context = JAXBContext.newInstance(sensorML.getClass());
 	     Marshaller m = context.createMarshaller();
 	     m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
@@ -127,6 +143,7 @@ public class JAXBTest {
 	     out.flush();
 	     out.close();
 	     System.out.println(sw.toString());
+	     logger.info("Test Successfully!");
 	}
 
 }

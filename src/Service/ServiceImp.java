@@ -22,9 +22,14 @@ import SensorMLTemplate.TagCoordinate;
 import SensorMLTemplate.TagField;
 import SensorMLTemplate.TagIdentification;
 import SensorMLTemplate.TagIdentifier;
+import SensorMLTemplate.TagInput;
+import SensorMLTemplate.TagInputs;
 import SensorMLTemplate.TagKeyWords;
 import SensorMLTemplate.TagLocation;
 import SensorMLTemplate.TagMember;
+import SensorMLTemplate.TagObservableProperty;
+import SensorMLTemplate.TagOutput;
+import SensorMLTemplate.TagOutputs;
 import SensorMLTemplate.TagPosition;
 import SensorMLTemplate.TagQuantity;
 import SensorMLTemplate.TagSensorML;
@@ -34,6 +39,7 @@ import SensorMLTemplate.TagTime;
 import SensorMLTemplate.TagTimePeriod;
 import SensorMLTemplate.TagUom;
 import SensorMLTemplate.TagValidTime;
+import SensorMLTemplate.TagVector;
 import SensorMLTemplate.TagswePosition;
 
 public class ServiceImp {
@@ -63,29 +69,31 @@ public class ServiceImp {
 		String uom = request.getParameter("uom");
 		
 		sensor.setSensorID(sensorID);
-		sensor.setDescription(description);
-		sensor.setKeyword(keyword);
-		sensor.setBeginTime(beginTime);
-		sensor.setEndTime(endTime);
-		sensor.setSamplingTime(samplingTime);
-		sensor.setEasting(easting);
-		sensor.setNorthing(northing);
-		sensor.setAltitude(altitude);
-		sensor.setObservableProperty(observableProperty);
-		sensor.setUom(uom);
-
+//		sensor.setDescription(description);
+//		sensor.setKeyword(keyword);
+//		sensor.setBeginTime(beginTime);
+//		sensor.setEndTime(endTime);
+//		sensor.setSamplingTime(samplingTime);
+//		sensor.setEasting(easting);
+//		sensor.setNorthing(northing);
+//		sensor.setAltitude(altitude);
+//		sensor.setObservableProperty(observableProperty);
+//		sensor.setUom(uom);
+		System.out.println("SensorID:"+sensor.getSensorID());
 		logger.info("SensorID:"+sensor.getSensorID());
+		HibernateUtil.add(sensor);
 	}
 	
 	public void outputToSensroML(Sensor sensor) throws JAXBException, IOException{
-		TagSensorML sensorML = new TagSensorML();
+		logger.info("Start to Test!");
+		 TagSensorML sensorML = new TagSensorML();
 		 TagMember member = new TagMember();
 		 TagSystem system = new TagSystem();
 		 
 		 //First Part
 		 TagKeyWords keyWords = new TagKeyWords();
 		 List<String> keywords = new ArrayList<String>();
-		 keywords.add(sensor.getKeyword());
+		 keywords.add("sensor bus");
 		 keyWords.setKeywords(keywords);
 		 
 		 //Second Part
@@ -94,7 +102,7 @@ public class ServiceImp {
 		 List<TagIdentifier> identifiers = new ArrayList<TagIdentifier>();
 		 TagTerm term = new TagTerm();
 		 term.setDefinition("urn:ogc:def:identifier:OGC:uniqueID");
-		 term.setValue(sensor.getSensorID());
+		 term.setValue("Sensor-10");
 		 Identifier.setTerm(term);
 		 identifiers.add(Identifier);
 		 identification.setIdentifiers(identifiers);
@@ -125,6 +133,7 @@ public class ServiceImp {
 		 TagPosition position = new TagPosition();
 		 TagswePosition sweposition = new TagswePosition();
 		 TagLocation location = new TagLocation();
+		 TagVector vector = new TagVector();
 		 List<TagCoordinate> coordinates = new ArrayList<TagCoordinate>();
 		 TagCoordinate coordinate = new TagCoordinate();
 		 TagCoordinate coordinate2 = new TagCoordinate();
@@ -152,15 +161,34 @@ public class ServiceImp {
 		 coordinates.add(coordinate);
 		 coordinates.add(coordinate2);
 		 coordinates.add(coordinate3);
-		 location.setCoordinates(coordinates);
-//		 location.setGmlid("STATION_LOCATION");
+		 vector.setCoordinates(coordinates);
+		 vector.setGmlid("STATION_LOCATION");
+		 location.setVector(vector);
 		 sweposition.setLocation(location);
 		 sweposition.setReferenceFrame("urn:ogc:def:crs:EPSG:4326");
 		 position.setPosition(sweposition);
 		 position.setName("sensorPosition");
 		 
+		 //Sixth Part
+		 TagObservableProperty observableProperty = new TagObservableProperty();
+		 List<TagInput> inputsList = new ArrayList<TagInput>();
+		 TagInput input = new TagInput();
+		 TagInputs inputs = new TagInputs();
+		 observableProperty.setDefinition("temperature");
+		 input.setObservableProperty(observableProperty);
+		 inputsList.add(input);
+		 inputs.setInput(inputsList);
 		 
-		 
+		 //SeventhPart
+		 TagUom uom3 = new TagUom();
+		 TagOutput output = new TagOutput();
+		 List<TagOutput> outputsList = new ArrayList<TagOutput>();
+		 TagOutputs outputs = new TagOutputs();
+		 uom3.setCode("degree");
+		 output.setUom(uom3);
+		 output.setName("temperature");
+		 outputsList.add(output);
+		 outputs.setOutputs(outputsList);
 		 
 		 system.setDescripition("A sensor in the Sensor Bus");
 		 system.setKeywords(keyWords);
@@ -168,25 +196,23 @@ public class ServiceImp {
 		 system.setValidTime(validTime);
 		 system.setCapabilites(capabilities);
 		 system.setPosition(position);
-		 
+		 system.setInputs(inputs);
+		 system.setOuputs(outputs);
 		 
 		 member.setSystem(system);
 		 sensorML.setMember(member);
 
-		 
-		 
 	     JAXBContext context = JAXBContext.newInstance(sensorML.getClass());
 	     Marshaller m = context.createMarshaller();
 	     m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 	     StringWriter sw = new StringWriter();
 	     m.marshal(sensorML,sw);
-	     
-	     String filename = "src/"+sensor.getSensorID()+".xml";
-	     OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(filename));
+	     OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream("src/SensorMLTemplate/Test.xml"));
 	     out.write(sw.toString());
 	     out.flush();
 	     out.close();
 	     System.out.println(sw.toString());
+	     logger.info("Test Successfully!");
 	}
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

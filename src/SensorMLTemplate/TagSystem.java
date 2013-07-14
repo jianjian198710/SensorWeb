@@ -21,7 +21,9 @@ public class TagSystem {
 	@XmlElement(name="sml:position")
 	private TagPosition position;
 	@XmlElement(name="sml:input")
-	private TagInput input;
+	private TagInputs inputs;
+	@XmlElement(name="sml:output")
+	private TagOutputs ouputs;
 	
 	
 	public TagIdentification getIdentification() {
@@ -72,11 +74,19 @@ public class TagSystem {
 		this.position = position;
 	}
 
-	public TagInput getInput() {
-		return input;
+	public TagInputs getInputs() {
+		return inputs;
 	}
 
-	public void setInput(TagInput input) {
-		this.input = input;
+	public void setInputs(TagInputs inputs) {
+		this.inputs = inputs;
+	}
+
+	public TagOutputs getOuputs() {
+		return ouputs;
+	}
+
+	public void setOuputs(TagOutputs ouputs) {
+		this.ouputs = ouputs;
 	}
 }
