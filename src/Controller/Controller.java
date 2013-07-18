@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import Service.ServiceImp;
+import Service.RegistrationServiceImp;
 
 /**
  * Servlet implementation class Controller
@@ -28,14 +28,16 @@ public class Controller extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		new ServiceImp(request,response).fillData();
+//		if(request.getParameter("regist")!=null){
+			new RegistrationServiceImp(request,response).fillData();
+//		}
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		new RegistrationServiceImp(request,response).fillData();
 	}
-
 }

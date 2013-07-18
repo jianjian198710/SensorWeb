@@ -7,7 +7,7 @@
 <title>Registration</title>
 </head>
 <body>
-<form action="Controller">
+<form action="Controller" method="POST">
 <div>
 <label>Please input the SensorID:</label><input type="text" id="sensorID" name="sensorID"/>
 </div>
