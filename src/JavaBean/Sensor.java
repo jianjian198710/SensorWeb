@@ -19,6 +19,13 @@ public class Sensor {
 	private boolean start;
 	private String data;
 	
+	public Sensor(){};
+	
+	public Sensor(String SensorID){
+		this.sensorID = SensorID;
+	}
+	
+	
 	public String getSensorID() {
 		return sensorID;
 	}

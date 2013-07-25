@@ -11,10 +11,12 @@ import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
+import org.apache.catalina.Session;
 import org.apache.log4j.Logger;
 
 import JavaBean.Sensor;
@@ -53,25 +55,26 @@ public class RegistrationServiceImp {
 		this.response = response;
 	}
 	
+	ArrayList<Sensor> sensors = new ArrayList<Sensor>();
 	Sensor sensor = new Sensor();
 	
 	public void fillData(){
 		logger.info("Get the data from input and fill them to the sensor");
 		String sensorID = request.getParameter("sensorID");
-		String description = request.getParameter("description");
-		String keyword = request.getParameter("keyword");
-		String beginTime = request.getParameter("beginTime");
-		String endTime = request.getParameter("endTime");
-		String samplingTime = request.getParameter("samplingTime");
-		String easting = request.getParameter("easting");
-		String northing = request.getParameter("northing");
-		String altitude = request.getParameter("altitude");
-		String observableProperty = request.getParameter("observableProperty");
-		String uom = request.getParameter("uom");
+//		String description = request.getParameter("description");
+//		String keyword = request.getParameter("keyword");
+//		String beginTime = request.getParameter("beginTime");
+//		String endTime = request.getParameter("endTime");
+//		String samplingTime = request.getParameter("samplingTime");
+//		String easting = request.getParameter("easting");
+//		String northing = request.getParameter("northing");
+//		String altitude = request.getParameter("altitude");
+//		String observableProperty = request.getParameter("observableProperty");
+//		String uom = request.getParameter("uom");
 		
 		//If the sensor is already in DB, will not register again
 		if(HibernateUtil.get(Sensor.class, sensorID)==null){
-			logger.info("Start to save the sensor to DB!");
+			System.out.println("Start to save the sensor to DB!");
 			sensor.setSensorID(sensorID);
 //			sensor.setDescription(description);
 //			sensor.setKeyword(keyword);
@@ -84,9 +87,9 @@ public class RegistrationServiceImp {
 //			sensor.setObservableProperty(observableProperty);
 //			sensor.setUom(uom);
 			System.out.println("SensorID:"+sensor.getSensorID());
-			logger.info("SensorID:"+sensor.getSensorID());
 			HibernateUtil.add(sensor);
-			logger.info("Save successully");
+			System.out.println("Save successully");
+			getAllSensors();
 			RequestDispatcher dispathcer = request.getRequestDispatcher("RegisterSuccess.jsp");
 			try {
 				dispathcer.forward(request, response);
@@ -239,7 +242,20 @@ public class RegistrationServiceImp {
 	     logger.info("Test Successfully!");
 	}
 	
+	public List<Sensor> getAllSensors(){
+		sensors = (ArrayList<Sensor>) HibernateUtil.getSession().createSQLQuery("select * from SENSOR");
+		for(Sensor sensor:sensors){
+			System.out.println(sensor.getSensorID());
+		}
+		return sensors;
+	}
+	
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		fillData();
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
 	}
 }

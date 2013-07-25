@@ -16,7 +16,7 @@ Success Registration!!!
 <input type="submit" name="registeAnother" value="Register Another One"/>
 </div>
 <div>
-<input type="submit" name="showALl" value="Show All the Registration Sensor"/>
+<input type="submit" name="showAll" value="Show All the Registration Sensor"/>
 </div>
 </form>
 </body>
