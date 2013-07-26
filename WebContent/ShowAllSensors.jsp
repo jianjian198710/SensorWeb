@@ -19,10 +19,16 @@
 			<td><label>Data</label></td>
 			<td><label>Operation</label></td>
 		</tr>	
-<%-- 		<c:forEach items="${list}" var="li">
-			<div>
-			</div>
-		</c:forEach> --%>
+		<c:forEach items="&{AllSensors}" var="sensor">
+			<td><div><input type="checkbox"/></div></td>
+			<td><label>${sensor.sensorID}</label></td>
+			<td><label>${sensor.isStart}</label></td>
+			<td><label>${sensor.easting}</label></td>
+			<td><label>${sensor.northing}</label></td>
+			<td><label>${sensor.observableProperty}</label></td>
+<%-- 		<td><label>${sensor.sensorID}</label></td>
+			<td><label>${sensor.sensorID}</label></td> --%>
+		</c:forEach>
 	</table>
 	<form action="controller">
 	<div>
