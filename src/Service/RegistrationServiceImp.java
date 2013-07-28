@@ -55,7 +55,16 @@ public class RegistrationServiceImp {
 		this.response = response;
 	}
 	
-	ArrayList<Sensor> sensors = new ArrayList<Sensor>();
+	private ArrayList<Sensor> sensors = new ArrayList<Sensor>();
+	
+	public ArrayList<Sensor> getSensors() {
+		return sensors;
+	}
+
+	public void setSensors(ArrayList<Sensor> sensors) {
+		this.sensors = sensors;
+	}
+
 	Sensor sensor = new Sensor();
 	
 	public void fillData(){
@@ -89,7 +98,6 @@ public class RegistrationServiceImp {
 			System.out.println("SensorID:"+sensor.getSensorID());
 			HibernateUtil.add(sensor);
 			System.out.println("Save successully");
-			getAllSensors();
 			RequestDispatcher dispathcer = request.getRequestDispatcher("RegisterSuccess.jsp");
 			try {
 				dispathcer.forward(request, response);
@@ -242,16 +250,19 @@ public class RegistrationServiceImp {
 	     logger.info("Test Successfully!");
 	}
 	
-	public List<Sensor> getAllSensors(){
-		sensors = (ArrayList<Sensor>) HibernateUtil.getSession().createSQLQuery("select * from SENSOR");
-		for(Sensor sensor:sensors){
-			System.out.println(sensor.getSensorID());
-		}
-		return sensors;
+	public List<Sensor> getAllSensorsFromDB(){
+		this.setSensors((ArrayList<Sensor>) HibernateUtil.getSession().createQuery("from Sensor").list());
+		return this.getSensors();
 	}
 	
 	
+	
+	
+	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		getAllSensorsFromDB();
+		HttpSession session = request.getSession();
+		session.setAttribute("AllSensors", sensors);
 		fillData();
 	}
 	
