@@ -67,7 +67,7 @@ public class RegistrationServiceImp {
 
 	Sensor sensor = new Sensor();
 	
-	public void fillData(){
+	public void register(){
 		logger.info("Get the data from input and fill them to the sensor");
 		String sensorID = request.getParameter("sensorID");
 //		String description = request.getParameter("description");
@@ -117,6 +117,30 @@ public class RegistrationServiceImp {
 			}
 		}
 
+	}
+	
+	public ArrayList<Sensor> getAllSensorsFromDB(){
+		this.setSensors((ArrayList<Sensor>) HibernateUtil.getSession().createQuery("from Sensor").list());
+		return this.getSensors();
+	}
+	
+	public void showAll(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		sensors = this.getAllSensorsFromDB();
+		HttpSession session = request.getSession();
+		session.setAttribute("AllSensors", sensors);
+		RequestDispatcher dispatcher= request.getRequestDispatcher("ShowAllSensors.jsp");
+		dispatcher.forward(request, response);
+	}
+	
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		getAllSensorsFromDB();
+		HttpSession session = request.getSession();
+
+		register();
+	}
+	
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		
 	}
 	
 	public void outputToSensroML(Sensor sensor) throws JAXBException, IOException{
@@ -248,25 +272,5 @@ public class RegistrationServiceImp {
 	     out.close();
 	     System.out.println(sw.toString());
 	     logger.info("Test Successfully!");
-	}
-	
-	public List<Sensor> getAllSensorsFromDB(){
-		this.setSensors((ArrayList<Sensor>) HibernateUtil.getSession().createQuery("from Sensor").list());
-		return this.getSensors();
-	}
-	
-	
-	
-	
-	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		getAllSensorsFromDB();
-		HttpSession session = request.getSession();
-		session.setAttribute("AllSensors", sensors);
-		fillData();
-	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
-		
 	}
 }

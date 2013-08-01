@@ -28,9 +28,13 @@ public class Controller extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		if(request.getParameter("regist")!=null){
-			new RegistrationServiceImp(request,response).fillData();
-//		}
+		RegistrationServiceImp rig = new RegistrationServiceImp(request,response);
+		if(request.getParameter("register")!=null&&request.getParameter("register").equals("register")){
+			rig.register();
+		}
+		if(request.getParameter("showAll")!=null&&request.getParameter("showAll").equals("Show All the Registration Sensor")){
+			rig.showAll(request, response);
+		}
 		
 	}
 
@@ -38,6 +42,6 @@ public class Controller extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		new RegistrationServiceImp(request,response).fillData();
+		new RegistrationServiceImp(request,response).register();
 	}
 }
