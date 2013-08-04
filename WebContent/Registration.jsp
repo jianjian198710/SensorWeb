@@ -7,7 +7,7 @@
 <title>Registration</title>
 </head>
 <body>
-<form action="Controller" method="POST">
+<form action="Controller" method="GET">
 <div>
 <label>Please input the SensorID:</label><input type="text" id="sensorID" name="sensorID"/>
 </div>
@@ -41,7 +41,7 @@
 <div>
 <label>Please input the UOM:</label><input type="text" id="uom" name="uom"/>
 </div>
-<input type="submit" name="regist" value="submit" />
+<input type="submit" name="register" value="register" />
 </form>
 </body>
 </html>

@@ -8,7 +8,7 @@
 </head>
 <body>
 Success Registration!!!
-<form action="Controller" method="POST">
+<form action="Controller" method="GET">
 <div>
 <input type="submit" name="startNow" value="StartNow"/>
 </div>
