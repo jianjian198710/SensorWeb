@@ -1,5 +1,11 @@
 package JavaBean;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="REGISTRATION")
 public class Sensor {
 	//Show in SensorML
 	private String sensorID;
@@ -15,9 +21,8 @@ public class Sensor {
 	private String uom;
 	
 	//Not show in SensorML
-	//show whether the senor is start
+	//show whether the sensor is start
 	private boolean start;
-	private String data;
 	
 	public Sensor(){};
 	
@@ -25,7 +30,7 @@ public class Sensor {
 		this.sensorID = SensorID;
 	}
 	
-	
+	@Id
 	public String getSensorID() {
 		return sensorID;
 	}
@@ -91,12 +96,6 @@ public class Sensor {
 	}
 	public void setUom(String uom) {
 		this.uom = uom;
-	}
-	public String getData() {
-		return data;
-	}
-	public void setData(String data) {
-		this.data = data;
 	}
 	public boolean isStart() {
 		return start;

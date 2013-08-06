@@ -19,6 +19,7 @@ import javax.xml.bind.Marshaller;
 import org.apache.catalina.Session;
 import org.apache.log4j.Logger;
 
+import JavaBean.Data;
 import JavaBean.Sensor;
 import SensorMLTemplate.TagCapabilities;
 import SensorMLTemplate.TagCoordinate;
@@ -66,38 +67,50 @@ public class RegistrationServiceImp {
 	}
 
 	Sensor sensor = new Sensor();
+	Data data = new Data();
 	
 	public void register(){
 		logger.info("Get the data from input and fill them to the sensor");
 		String sensorID = request.getParameter("sensorID");
-//		String description = request.getParameter("description");
-//		String keyword = request.getParameter("keyword");
-//		String beginTime = request.getParameter("beginTime");
-//		String endTime = request.getParameter("endTime");
-//		String samplingTime = request.getParameter("samplingTime");
-//		String easting = request.getParameter("easting");
-//		String northing = request.getParameter("northing");
-//		String altitude = request.getParameter("altitude");
-//		String observableProperty = request.getParameter("observableProperty");
-//		String uom = request.getParameter("uom");
+		String description = request.getParameter("description");
+		String keyword = request.getParameter("keyword");
+		String beginTime = request.getParameter("beginTime");
+		String endTime = request.getParameter("endTime");
+		String samplingTime = request.getParameter("samplingTime");
+		String easting = request.getParameter("easting");
+		String northing = request.getParameter("northing");
+		String altitude = request.getParameter("altitude");
+		String observableProperty = request.getParameter("observableProperty");
+		String uom = request.getParameter("uom");
 		
 		//If the sensor is already in DB, will not register again
 		if(HibernateUtil.get(Sensor.class, sensorID)==null){
+//		if(true){
 			System.out.println("Start to save the sensor to DB!");
 			sensor.setSensorID(sensorID);
-//			sensor.setDescription(description);
-//			sensor.setKeyword(keyword);
-//			sensor.setBeginTime(beginTime);
-//			sensor.setEndTime(endTime);
-//			sensor.setSamplingTime(samplingTime);
-//			sensor.setEasting(easting);
-//			sensor.setNorthing(northing);
-//			sensor.setAltitude(altitude);
-//			sensor.setObservableProperty(observableProperty);
-//			sensor.setUom(uom);
+			sensor.setDescription(description);
+			sensor.setKeyword(keyword);
+			sensor.setBeginTime(beginTime);
+			sensor.setEndTime(endTime);
+			sensor.setSamplingTime(samplingTime);
+			sensor.setEasting(easting);
+			sensor.setNorthing(northing);
+			sensor.setAltitude(altitude);
+			sensor.setObservableProperty(observableProperty);
+			sensor.setUom(uom);
+			
+			data.setSensor(sensor);
+			data.setValue("111");
+			
 			System.out.println("SensorID:"+sensor.getSensorID());
 			HibernateUtil.add(sensor);
 			System.out.println("Save successully");
+			
+			System.out.println("Data value:"+data.getValue());
+			HibernateUtil.add(data);
+			System.out.println("Save successully");
+			
+			
 			RequestDispatcher dispathcer = request.getRequestDispatcher("RegisterSuccess.jsp");
 			try {
 				dispathcer.forward(request, response);
