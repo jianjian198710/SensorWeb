@@ -69,8 +69,9 @@ public class RegistrationServiceImp {
 	Sensor sensor = new Sensor();
 	Data data = new Data();
 	
-	public void register(){
-		logger.info("Get the data from input and fill them to the sensor");
+	
+	public void register() throws IOException,ServletException{
+		System.out.println("!!!!!!!!!!!!!!Get the data from input and fill them to the sensor!!!!!!!!!!!!!");
 		String sensorID = request.getParameter("sensorID");
 		String description = request.getParameter("description");
 		String keyword = request.getParameter("keyword");
@@ -83,10 +84,9 @@ public class RegistrationServiceImp {
 		String observableProperty = request.getParameter("observableProperty");
 		String uom = request.getParameter("uom");
 		
-		//If the sensor is already in DB, will not register again
+		//如果DB中不存在该Sensor 插入到注册表中
 		if(HibernateUtil.get(Sensor.class, sensorID)==null){
-//		if(true){
-			System.out.println("Start to save the sensor to DB!");
+			System.out.println("!!!!!!!!!!!Start to save the sensor to DB!!!!!!!!!");
 			sensor.setSensorID(sensorID);
 			sensor.setDescription(description);
 			sensor.setKeyword(keyword);
@@ -99,35 +99,15 @@ public class RegistrationServiceImp {
 			sensor.setObservableProperty(observableProperty);
 			sensor.setUom(uom);
 			
-			data.setSensor(sensor);
-			data.setValue("111");
-			
 			System.out.println("SensorID:"+sensor.getSensorID());
 			HibernateUtil.add(sensor);
 			System.out.println("Save successully");
 			
-			System.out.println("Data value:"+data.getValue());
-			HibernateUtil.add(data);
-			System.out.println("Save successully");
-			
-			
 			RequestDispatcher dispathcer = request.getRequestDispatcher("RegisterSuccess.jsp");
-			try {
-				dispathcer.forward(request, response);
-			} catch (ServletException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			dispathcer.forward(request, response);
 		}else{
 			RequestDispatcher dispathcer = request.getRequestDispatcher("AlreadyRegister.jsp");
-			try {
-				dispathcer.forward(request, response);
-			} catch (ServletException e) {
-				e.printStackTrace();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
+			dispathcer.forward(request, response);
 		}
 
 	}
@@ -147,8 +127,7 @@ public class RegistrationServiceImp {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		getAllSensorsFromDB();
-		HttpSession session = request.getSession();
-
+		showAll(request,response);
 		register();
 	}
 	
@@ -157,7 +136,7 @@ public class RegistrationServiceImp {
 	}
 	
 	public void outputToSensroML(Sensor sensor) throws JAXBException, IOException{
-		logger.info("Start to Test!");
+		 System.out.println("Start to create XML...");
 		 TagSensorML sensorML = new TagSensorML();
 		 TagMember member = new TagMember();
 		 TagSystem system = new TagSystem();
