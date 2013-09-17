@@ -5,7 +5,7 @@ import JavaBean.Sensor;
 public class SensorDao implements Dao {
 
 	@Override
-	public void inset(Sensor sensor) {
+	public void insert(Sensor sensor) {
 		// TODO Auto-generated method stub
 
 	}
