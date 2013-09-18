@@ -3,6 +3,9 @@ package Service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import JavaBean.Data;
+import JavaBean.Sensor;
+
 public class InsertServiceImp {
 	protected HttpServletRequest request;
 	protected HttpServletResponse response;
@@ -12,7 +15,9 @@ public class InsertServiceImp {
 		this.response = response;
 	}
 	
-	public void insert(){
-		
+	public void insert(Data data){
+		if(HibernateUtil.get(Sensor.class, data.getSensor().getSensorID())!=null){
+			
+		}
 	}
 }
