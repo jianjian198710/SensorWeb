@@ -1,12 +1,15 @@
 package Controller;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import Server.TCPServer;
 import Service.RegistrationServiceImp;
 
 /**
@@ -29,13 +32,23 @@ public class Controller extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RegistrationServiceImp rig = new RegistrationServiceImp(request,response);
+		//Registration.jsp
 		if(request.getParameter("register")!=null&&request.getParameter("register").equals("register")){
 			rig.register();
 		}
+		//
 		if(request.getParameter("showAll")!=null&&request.getParameter("showAll").equals("Show All the Registration Sensor")){
 			rig.showAll(request, response);
 		}
-		
+		//ShowAllSensors.jsp
+		if(request.getParameter("start")!=null&&request.getParameter("start").equals("StartAll")){
+			TCPServer.getInstance().setFlag(true);
+			TCPServer.getInstance().startAll();
+		}
+		if(request.getParameter("stop")!=null&&request.getParameter("stop").equals("StopAll")){
+			TCPServer.getInstance().setFlag(false);
+			TCPServer.getInstance().stopAll();
+		}
 	}
 
 	/**

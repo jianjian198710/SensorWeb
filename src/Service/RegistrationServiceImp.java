@@ -45,6 +45,7 @@ import SensorMLTemplate.TagUom;
 import SensorMLTemplate.TagValidTime;
 import SensorMLTemplate.TagVector;
 import SensorMLTemplate.TagswePosition;
+import Server.TCPServer;
 
 public class RegistrationServiceImp {
 	private Logger logger = Logger.getLogger(RegistrationServiceImp.class);
@@ -101,7 +102,11 @@ public class RegistrationServiceImp {
 			
 			System.out.println("SensorID:"+sensor.getSensorID());
 			HibernateUtil.add(sensor);
-			System.out.println("Save successully");
+			System.out.println("!!!!!!!!!!!Save successully!!!!!!!!!!!!!");
+			
+			//将新注册的Sensor加入到TCPServer的保存表中
+			TCPServer.getInstance().getAllSensorID().add(sensorID);
+			System.out.println("!!!!!!!SesorIDs is:"+TCPServer.getInstance().getAllSensorID());
 			
 			RequestDispatcher dispathcer = request.getRequestDispatcher("RegisterSuccess.jsp");
 			dispathcer.forward(request, response);
@@ -109,7 +114,6 @@ public class RegistrationServiceImp {
 			RequestDispatcher dispathcer = request.getRequestDispatcher("AlreadyRegister.jsp");
 			dispathcer.forward(request, response);
 		}
-
 	}
 	
 	public ArrayList<Sensor> getAllSensorsFromDB(){

@@ -8,14 +8,14 @@
 </head>
 <body>
 <form action="Registration.jsp">
-<div>
-<input type="submit" name="newsensor" value="Register a new sensor"/>
-</div>
-</form>
-<form action="Service.jsp">
-<div>
-<input type="submit" name="oldsensor" value="Already have a sensor"/>
-</div>
+	<div>
+	<input type="submit" name="newsensor" value="Register a new sensor"/>
+	</div>
+	</form>
+	<form action="Service.jsp">
+	<div>
+	<input type="submit" name="oldsensor" value="Already have a sensor"/>
+	</div>
 </form>
 
 </body>
