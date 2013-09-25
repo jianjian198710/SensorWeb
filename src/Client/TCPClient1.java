@@ -33,7 +33,7 @@ public class TCPClient1 {
 							e.printStackTrace();
 						} 
 				}
-			}, 0, 3*1000);  //每半分无延迟调用一次run方法里面的逻辑
+			}, 0, 3*1000);  
 		} catch(Exception e) {
 			System.out.println("!!!!!!!!!发送出错!!!!!!");
 		} 

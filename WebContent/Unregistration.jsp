@@ -7,21 +7,13 @@
 <title>Insert title here</title>
 </head>
 <body>
-<form action="Registration.jsp">
+<form action="Controller" method="GET">
 	<div>
-	<input type="submit" name="newsensor" value="Register a new sensor"/>
+	<label>Please input the SensorID:</label><input type="text" id="sensorID" name="sensorID"/>
+	</div>
+	<div>
+	<input type="submit" name="unregister" value="Unregister">
 	</div>
 </form>
-<form action="Service.jsp">
-	<div>
-	<input type="submit" name="oldsensor" value="Already have a sensor"/>
-	</div>
-</form>
-<form action="Unregistration.jsp">
-	<div>
-	<input type="submit" name="unregister" value="Unregister a sensor"/>
-	</div>
-</form>
-
 </body>
 </html>

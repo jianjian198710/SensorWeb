@@ -41,7 +41,7 @@
 <div>
 <label>Please input the UOM:</label><input type="text" id="uom" name="uom"/>
 </div>
-<input type="submit" name="register" value="register" />
+<input type="submit" name="register" value="Register" />
 </form>
 </body>
 </html>

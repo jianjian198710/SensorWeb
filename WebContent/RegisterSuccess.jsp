@@ -9,15 +9,18 @@
 <body>
 Success Registration!!!
 <form action="Controller" method="GET">
-<div>
-<input type="submit" name="startNow" value="StartNow"/>
-</div>
-<div>
-<input type="submit" name="registeAnother" value="Register Another One"/>
-</div>
-<div>
-<input type="submit" name="showAll" value="Show All the Registration Sensor"/>
-</div>
+	<div>
+	<input type="submit" name="startNow" value="StartNow"/>
+	</div>
+	<div>
+	<input type="submit" name="createSensorML" value="createSensorML"/>
+	</div>
+	<div>
+	<input type="submit" name="registeAnother" value="Register Another One"/>
+	</div>
+	<div>
+	<input type="submit" name="showAll" value="Show All the Registration Sensor"/>
+	</div>
 </form>
 </body>
 </html>

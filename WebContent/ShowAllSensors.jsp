@@ -19,25 +19,24 @@
 			<td><label>Data</label></td>
 			<td><label>Operation</label></td>
 		</tr>	
-<%-- 		<c:forEach items="${sessionScope.AllSensors}" var="sensor">
+		<c:forEach items="${sessionScope.AllSensors}" var="sensor">
 			<tr>
 			<td><div><input type="checkbox"/></div></td>
 			<td><label>${sensor.sensorID}</label></td>
-			<td><label>${sensor.isStart}</label></td>
 			<td><label>${sensor.easting}</label></td>
 			<td><label>${sensor.northing}</label></td>
 			<td><label>${sensor.observableProperty}</label></td>
-		<td><label>${sensor.sensorID}</label></td>
+			<td><label>${sensor.sensorID}</label></td>
 			<td><label>${sensor.sensorID}</label></td>
 			</tr>
-		</c:forEach> --%>
+		</c:forEach>
 	</table>
 	<form action="Controller">
 		<div>
-		<input type="submit" name="start" value="StartAll"/>
-		</div>
-		<div>
-		<input type="submit" name="stop" value="StopAll"/>
+		<input type="submit" name="start" value="start"/>
+		<input type="submit" name="stop" value="stop"/>
+		<input type="submit" name="startAll" value="StartAll"/>
+		<input type="submit" name="stopAll" value="StopAll"/>
 		</div>
 	</form>
 </body>
