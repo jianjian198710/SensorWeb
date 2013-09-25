@@ -53,10 +53,12 @@ public class Controller extends HttpServlet {
 		if(request.getParameter("stop")!=null&&request.getParameter("stop").equals("StopAll")){
 			//TODO TCPServer.getInstance().stop(selectedSensorIDs);
 		}
-		if(request.getParameter("startAll")!=null&&request.getParameter("startAll").equals("startAll")){
+		if(request.getParameter("startAll")!=null&&request.getParameter("startAll").equals("StartAll")){
 			TCPServer.getInstance().start();
+			RequestDispatcher dispathcer = request.getRequestDispatcher("ShowAllSensors.jsp");
+			dispathcer.forward(request, response);
 		}
-		if(request.getParameter("stopAll")!=null&&request.getParameter("stopAll").equals("stopAll")){
+		if(request.getParameter("stopAll")!=null&&request.getParameter("stopAll").equals("StopAll")){
 			TCPServer.getInstance().stop();
 		}
 	}

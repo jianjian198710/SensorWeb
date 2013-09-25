@@ -43,15 +43,23 @@ public class TCPServer{
 		}
 		return instance;
 	}
+	
+//	public ServerSocket getServerSocket() throws IOException{
+//		if(serverSocket == null){
+//			serverSocket = new ServerSocket(PORT);
+//		}
+//		return serverSocket;
+//	}
 
 	public void start() throws IOException {
+		System.out.println("执行start方法!!!!!!!");
 		List allsensorID =  HibernateUtil.getSession().createQuery("select s.sensorID from Sensor as s").list();
 		for(Object sensorID: allsensorID){
 			if(sensorID instanceof java.lang.String){
 				sensorIDs.add((String)sensorID);
 			}
 		}
-		if(serverSocket.isClosed()){
+		if(serverSocket==null||serverSocket.isClosed()){
 			System.out.println("!!!!!!!!!!!!TcpServer StartAll!!!!!!!!!");
 			serverSocket = new ServerSocket(PORT);
 			Socket socket = serverSocket.accept();
@@ -69,7 +77,7 @@ public class TCPServer{
 	public void startSome(HashSet<String> selectedSensorIDs) throws IOException{
 		//如果ServerSocket已关闭 则重新打开 并将sensorIDs的内容设为已经选中的内容
 		this.getSensorIDs().addAll(selectedSensorIDs);
-		if(serverSocket.isClosed()){
+		if(serverSocket==null||serverSocket.isClosed()){
 			serverSocket = new ServerSocket(PORT);
 			Socket socket = serverSocket.accept();
 			System.out.println("!!!!!!!!!!!!!!收到信息!!!!!!!!!!!!!");
@@ -80,7 +88,7 @@ public class TCPServer{
 	
 	public void stopSome(HashSet<String> selectedSensorIDs) throws IOException{
 		this.getSensorIDs().removeAll(selectedSensorIDs);
-		if(this.getSensorIDs().isEmpty()&&serverSocket.isBound()){
+		if(this.getSensorIDs().isEmpty()&&!serverSocket.isClosed()){
 			serverSocket.close();
 		}
 		System.out.println("stopSome执行完毕!!!!!!!!");
@@ -111,7 +119,7 @@ public class TCPServer{
 						data.setSensor(sensor);
 						isi.insert(data);
 					}else{
-						System.out.println("This Sensor "+receinfo[0]+" must be registed first!!!");
+						System.out.println("无用消息!!!From"+receinfo[0]+": "+s);
 					}
 				}
 			}catch(IOException e){

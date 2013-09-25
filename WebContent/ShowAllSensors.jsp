@@ -33,8 +33,8 @@
 	</table>
 	<form action="Controller">
 		<div>
-		<input type="submit" name="start" value="start"/>
-		<input type="submit" name="stop" value="stop"/>
+		<input type="submit" name="start" value="Start"/>
+		<input type="submit" name="stop" value="Stop"/>
 		<input type="submit" name="startAll" value="StartAll"/>
 		<input type="submit" name="stopAll" value="StopAll"/>
 		</div>
