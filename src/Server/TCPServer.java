@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.net.SocketException;
 import java.nio.charset.Charset;
 import java.util.HashSet;
 import java.util.List;
@@ -62,16 +63,23 @@ public class TCPServer{
 		if(serverSocket==null||serverSocket.isClosed()){
 			System.out.println("!!!!!!!!!!!!TcpServer StartAll!!!!!!!!!");
 			serverSocket = new ServerSocket(PORT);
-			Socket socket = serverSocket.accept();
-			System.out.println("!!!!!!!!!!!!!!收到信息!!!!!!!!!!!!!");
-			executor.execute(new DataProcessor(socket));
+			try{
+				Socket socket = serverSocket.accept();
+				System.out.println("!!!!!!!!!!!!!!收到信息!!!!!!!!!!!!!");
+				executor.execute(new DataProcessor(socket));
+			}catch(SocketException e){
+				System.out.println("serverSocket已经关闭!!!!!");
+			}
 		}
+		System.out.println("Start方法执行完毕!!!!!!!+serverSocket is"+serverSocket.isClosed());
 	}
 	
 	public void stop() throws IOException{
 		this.getSensorIDs().clear();
-		serverSocket.close();
-		System.out.println("stopSome执行完毕!!!!!!!!");
+		if(!serverSocket.isClosed()){
+			serverSocket.close();
+		}
+		System.out.println("stop执行完毕!!!!!!!!serverSocket is"+serverSocket.isClosed());
 	}
 	
 	public void startSome(HashSet<String> selectedSensorIDs) throws IOException{
@@ -79,19 +87,29 @@ public class TCPServer{
 		this.getSensorIDs().addAll(selectedSensorIDs);
 		if(serverSocket==null||serverSocket.isClosed()){
 			serverSocket = new ServerSocket(PORT);
-			Socket socket = serverSocket.accept();
-			System.out.println("!!!!!!!!!!!!!!收到信息!!!!!!!!!!!!!");
-			executor.execute(new DataProcessor(socket));
+			try{
+				Socket socket = serverSocket.accept();
+				System.out.println("!!!!!!!!!!!!!!收到信息!!!!!!!!!!!!!");
+				executor.execute(new DataProcessor(socket));
+			}catch(SocketException e){
+				System.out.println("serverSocket已经关闭!!!!!");
+			}
 		}
-		System.out.println("startSome执行完毕!!!!!!!!");
+		System.out.println("startSome执行完毕!!!!!!!!serverSocket is"+serverSocket.isClosed());
 	}
 	
 	public void stopSome(HashSet<String> selectedSensorIDs) throws IOException{
-		this.getSensorIDs().removeAll(selectedSensorIDs);
+		System.out.println("selectedSensorIDs is: "+selectedSensorIDs);
+		for(String sensorID: selectedSensorIDs){
+			if(this.getSensorIDs().contains(sensorID)){
+				this.getSensorIDs().remove(sensorID);
+			}
+		}
+		System.out.println(this.getSensorIDs());
 		if(this.getSensorIDs().isEmpty()&&!serverSocket.isClosed()){
 			serverSocket.close();
 		}
-		System.out.println("stopSome执行完毕!!!!!!!!");
+		System.out.println("stopSome执行完毕!!!!!!!serverSocket is"+serverSocket.isClosed());
 	}
 	
 	private final class DataProcessor implements Runnable{

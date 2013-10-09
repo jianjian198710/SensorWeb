@@ -7,7 +7,7 @@ import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class TCPClient1 {
+public class TCPClient2 {
 	private static Socket socket;
 	private static OutputStream os;
 	
@@ -25,7 +25,7 @@ public class TCPClient1 {
 				@Override
 				public void run(){
 					int random = new Random().nextInt(MAX_VALUE); //0,1,2
-					String s = "AAA##Temperature##"+random+"##degree"+"\n";
+					String s = "BBB##Temperature##"+random+"##degree"+"\n";
 						try {
 							os.write(s.getBytes());
 							os.flush();
@@ -40,4 +40,3 @@ public class TCPClient1 {
 	}
 
 }
-

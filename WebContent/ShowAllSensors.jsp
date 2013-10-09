@@ -8,9 +8,10 @@
 <title>Insert title here</title>
 </head>
 <body>
+	<form action="Controller">
 	<table>
 		<tr>
-			<td><div><input type="checkbox"/></div></td>
+			<td><div></div></td>
 			<td><label>SensorID</label></td>
 			<td><label>Status</label></td>
 			<td><label>Easting</label></td>
@@ -21,7 +22,7 @@
 		</tr>	
 		<c:forEach items="${sessionScope.AllSensors}" var="sensor">
 			<tr>
-			<td><div><input type="checkbox"/></div></td>
+			<td><div><input type="checkbox" name="sid" value="${sensor.sensorID}"/></div></td>
 			<td><label>${sensor.sensorID}</label></td>
 			<td><label>${sensor.easting}</label></td>
 			<td><label>${sensor.northing}</label></td>
@@ -31,7 +32,6 @@
 			</tr>
 		</c:forEach>
 	</table>
-	<form action="Controller">
 		<div>
 		<input type="submit" name="start" value="Start"/>
 		<input type="submit" name="stop" value="Stop"/>
