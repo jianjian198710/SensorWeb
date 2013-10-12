@@ -7,6 +7,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.nio.charset.Charset;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -123,6 +125,7 @@ public class TCPServer{
 				System.out.println(br.readLine());
 				String s = null;
 				InsertServiceImp isi = new InsertServiceImp();
+				SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
 				while((s = br.readLine())!=null){
 					//sensorID+"##Temperature##"+data+"##degree";
 					System.out.println("!!!!!!!收到的信息"+s);
@@ -135,6 +138,8 @@ public class TCPServer{
 						sensor.setUom(receinfo[3]);
 						data.setValue(receinfo[2]);
 						data.setSensor(sensor);
+						//打时间戳
+						data.setDate(formatter.format(new Date()));
 						isi.insert(data);
 					}else{
 						System.out.println("无用消息!!!From"+receinfo[0]+": "+s);

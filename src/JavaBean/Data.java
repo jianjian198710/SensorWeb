@@ -15,6 +15,7 @@ public class Data {
 	private int id;
 	private Sensor sensor;
 	private String value;
+	private String date;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -37,5 +38,11 @@ public class Data {
 	}
 	public void setValue(String value) {
 		this.value = value;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate( String date) {
+		this.date = date;
 	}
 }

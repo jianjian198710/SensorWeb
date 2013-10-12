@@ -20,10 +20,6 @@ public class Sensor {
 	private String observableProperty;
 	private String uom;
 	
-	//Not show in SensorML
-	//show whether the sensor is start
-	private boolean start;
-	
 	public Sensor(){};
 	
 	public Sensor(String SensorID){
@@ -96,11 +92,5 @@ public class Sensor {
 	}
 	public void setUom(String uom) {
 		this.uom = uom;
-	}
-	public boolean isStart() {
-		return start;
-	}
-	public void setStart(boolean start) {
-		this.start = start;
 	}
 }
