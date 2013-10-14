@@ -186,11 +186,13 @@ public class CreateSensorMLServiceImp {
 		StringWriter sw = new StringWriter();
 		m.marshal(sensorML, sw);
 		
-		String filename = "src/SensorML/"+sensorID+".xml";
+		String filename = "C:/WorkSpace/SensorWeb/SensorML/"+sensorID+".xml";
 		File file = new File(filename);
+		System.out.println(file.getCanonicalPath());
 		if(file.exists()){
 			System.out.println("文件已经存在!");
 		}else{
+			System.out.println("Create Finished!!!!!!");
 			OutputStreamWriter out = new OutputStreamWriter(new FileOutputStream(file));
 			out.write(sw.toString());
 			out.flush();
