@@ -134,12 +134,14 @@ public class TCPServer{
 						Sensor sensor = new Sensor();
 						Data data = new Data();
 						sensor.setSensorID(receinfo[0]);
-						sensor.setObservableProperty(receinfo[1]);
-						sensor.setUom(receinfo[3]);
+						//sensor.setObservableProperty(receinfo[1]);
+						//sensor.setUom(receinfo[3]);
 						data.setValue(receinfo[2]);
 						data.setSensor(sensor);
+						data.setObservableProperty(receinfo[1]);
+						data.setUom(receinfo[3]);
 						//打时间戳
-						data.setDate(formatter.format(new Date()));
+						data.setTimeStamp(formatter.format(new Date()));
 						isi.insert(data);
 					}else{
 						System.out.println("无用消息!!!From"+receinfo[0]+": "+s);
