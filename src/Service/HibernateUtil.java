@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.Configuration;
 
+@SuppressWarnings("deprecation")
 public class HibernateUtil {
 	 private static SessionFactory sessionFactory;   
 	    private static ThreadLocal<Session> session = new ThreadLocal<Session>();   

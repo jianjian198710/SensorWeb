@@ -4,7 +4,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>Welcome</title>
 </head>
 <body>
 <form action="Registration.jsp">
@@ -12,9 +12,10 @@
 	<input type="submit" name="newsensor" value="Register a new sensor"/>
 	</div>
 </form>
-<form action="Service.jsp">
+<form action="Controller">
 	<div>
 	<input type="submit" name="oldsensor" value="Already have a sensor"/>
+	<input type="hidden" name="showAll" value="Show All the Registration Sensor"/>
 	</div>
 </form>
 <form action="Unregistration.jsp">

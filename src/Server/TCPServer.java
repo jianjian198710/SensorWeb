@@ -46,13 +46,6 @@ public class TCPServer{
 		}
 		return instance;
 	}
-	
-//	public ServerSocket getServerSocket() throws IOException{
-//		if(serverSocket == null){
-//			serverSocket = new ServerSocket(PORT);
-//		}
-//		return serverSocket;
-//	}
 
 	public void start() throws IOException {
 		System.out.println("执行start方法!!!!!!!");
@@ -62,31 +55,30 @@ public class TCPServer{
 				sensorIDs.add((String)sensorID);
 			}
 		}
+		System.out.println("TCPServer中保存的Sensor列表为: "+this.getSensorIDs());
 		if(serverSocket==null||serverSocket.isClosed()){
-			System.out.println("!!!!!!!!!!!!TcpServer StartAll!!!!!!!!!");
 			serverSocket = new ServerSocket(PORT);
 			try{
 				Socket socket = serverSocket.accept();
-				System.out.println("!!!!!!!!!!!!!!收到信息!!!!!!!!!!!!!");
 				executor.execute(new DataProcessor(socket));
 			}catch(SocketException e){
 				System.out.println("serverSocket已经关闭!!!!!");
 			}
 		}
-		System.out.println("Start方法执行完毕!!!!!!!+serverSocket is"+serverSocket.isClosed());
 	}
 	
 	public void stop() throws IOException{
 		this.getSensorIDs().clear();
+		System.out.println("TCPServer中保存的Sensor列表为: "+this.getSensorIDs());
 		if(!serverSocket.isClosed()){
 			serverSocket.close();
 		}
-		System.out.println("stop执行完毕!!!!!!!!serverSocket is"+serverSocket.isClosed());
 	}
 	
 	public void startSome(HashSet<String> selectedSensorIDs) throws IOException{
 		//如果ServerSocket已关闭 则重新打开 并将sensorIDs的内容设为已经选中的内容
 		this.getSensorIDs().addAll(selectedSensorIDs);
+		System.out.println("TCPServer中保存的Sensor列表为: "+this.getSensorIDs());
 		if(serverSocket==null||serverSocket.isClosed()){
 			serverSocket = new ServerSocket(PORT);
 			try{
@@ -97,7 +89,6 @@ public class TCPServer{
 				System.out.println("serverSocket已经关闭!!!!!");
 			}
 		}
-		System.out.println("startSome执行完毕!!!!!!!!serverSocket is"+serverSocket.isClosed());
 	}
 	
 	public void stopSome(HashSet<String> selectedSensorIDs) throws IOException{
@@ -107,11 +98,10 @@ public class TCPServer{
 				this.getSensorIDs().remove(sensorID);
 			}
 		}
-		System.out.println(this.getSensorIDs());
+		System.out.println("TCPServer中保存的Sensor列表为: "+this.getSensorIDs());
 		if(this.getSensorIDs().isEmpty()&&!serverSocket.isClosed()){
 			serverSocket.close();
 		}
-		System.out.println("stopSome执行完毕!!!!!!!serverSocket is"+serverSocket.isClosed());
 	}
 	
 	private final class DataProcessor implements Runnable{
@@ -128,14 +118,12 @@ public class TCPServer{
 				SimpleDateFormat formatter = new SimpleDateFormat ("yyyy-MM-dd HH:mm:ss");
 				while((s = br.readLine())!=null){
 					//sensorID+"##Temperature##"+data+"##degree";
-					System.out.println("!!!!!!!收到的信息"+s);
+					System.out.println("!!!!!!!收到有用信息"+s);
 					String[] receinfo = s.split("##");
 					if(TCPServer.getInstance().getSensorIDs().contains(receinfo[0])){
 						Sensor sensor = new Sensor();
 						Data data = new Data();
 						sensor.setSensorID(receinfo[0]);
-						//sensor.setObservableProperty(receinfo[1]);
-						//sensor.setUom(receinfo[3]);
 						data.setValue(receinfo[2]);
 						data.setSensor(sensor);
 						data.setObservableProperty(receinfo[1]);

@@ -4,6 +4,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import JavaBean.Sensor;
+import Server.TCPServer;
 
 public class UnregistrationServiceImp {
 	protected HttpServletRequest request;
@@ -14,12 +15,17 @@ public class UnregistrationServiceImp {
 		this.response = response;
 	}
 	
-	private String sensorID = request.getParameter("sensorID");
+	private String sensorID;
 	private Sensor sensor;
 	
 	public void unregister(){
+		sensorID = request.getParameter("sensorID");
+		System.out.println(sensorID);
 		if((sensor = (Sensor)HibernateUtil.get(Sensor.class, sensorID))!=null){
 			HibernateUtil.delete(sensor);
+			TCPServer.getInstance().getSensorIDs().remove(sensorID);
+			//将注销的Sensor从TCPServer的保存表中删除
+			System.out.println("SensorIDs"+TCPServer.getInstance().getSensorIDs());
 			System.out.println("注销成功!!!!!!!!!");
 		}
 		else{

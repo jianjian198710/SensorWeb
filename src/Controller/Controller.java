@@ -37,14 +37,26 @@ public class Controller extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		RegistrationServiceImp rig = new RegistrationServiceImp(request,response);
-//		UnregistrationServiceImp urig = new UnregistrationServiceImp(request,response);
 		//Registration.jsp
 		if(request.getParameter("register")!=null&&request.getParameter("register").equals("Register")){
 			rig.register();
 		}
-		
+		//Unregistration.jsp
+		if(request.getParameter("unregister")!=null){
+			UnregistrationServiceImp urig = new UnregistrationServiceImp(request, response);
+			urig.unregister();
+			RequestDispatcher dispathcer = request.getRequestDispatcher("UnregistrationSuccess.jsp");
+			dispathcer.forward(request, response);
+		}
 		//RegisterSuccess.jsp
-		if(request.getParameter("showAll")!=null&&request.getParameter("showAll").equals("Show All the Registration Sensor")){
+		if(request.getParameter("startNow")!=null){
+			String sensorID = request.getParameter("sensorID");
+			HashSet<String> sensorids = new HashSet<String>();
+				sensorids.add(sensorID.trim());
+			TCPServer.getInstance().startSome(sensorids);
+			rig.showAll(request, response);
+		}
+		if(request.getParameter("showAll")!=null){
 			rig.showAll(request, response);
 		}
 		if(request.getParameter("registeAnother")!=null){
@@ -59,12 +71,6 @@ public class Controller extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		
-		//Unregistration.jsp
-		if(request.getParameter("unregister")!=null&&request.getParameter("unregister").equals("Unregister")){
-//			urig.unregister();
-		}
-		
 		//ShowAllSensors.jsp
 		if(request.getParameter("start")!=null&&request.getParameter("start").equals("Start")){
 			String[] sensors = request.getParameterValues("sid");
@@ -73,7 +79,7 @@ public class Controller extends HttpServlet {
 				dispathcer.forward(request, response);
 				return;
 			}
-			System.out.println("!!!!!!Sid is:"+Arrays.toString(sensors));
+			System.out.println("要启动的Sensor为:"+Arrays.toString(sensors));
 			HashSet<String> sensorids = new HashSet<String>();
 			for(String sensorid: sensors){
 				sensorids.add(sensorid.trim());
@@ -89,7 +95,7 @@ public class Controller extends HttpServlet {
 				dispathcer.forward(request, response);
 				return;
 			}
-			System.out.println("!!!!!!Sid is:"+Arrays.toString(sensors));
+			System.out.println("要停止的Sensor为:"+Arrays.toString(sensors));
 			HashSet<String> sensorids = new HashSet<String>();
 			for(String sensorid: sensors){
 				sensorids.add(sensorid.trim());

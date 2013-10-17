@@ -4,16 +4,12 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Unregistration</title>
+<title>UnregistrationSuccess</title>
 </head>
 <body>
-<form action="Controller" method="GET">
-	<div>
-	<label>Please input the SensorID:</label><input type="text" id="sensorID" name="sensorID"/>
-	</div>
-	<div>
-	<input type="submit" name="unregister" value="Unregister">
-	</div>
+<form action="Welcome.jsp">
+	Unregistration Successfully!
+	<input type="submit" name="submit" value="BackToHome" />
 </form>
 </body>
 </html>
