@@ -22,12 +22,11 @@ public class UnregistrationServiceImp {
 	
 	public void unregister(){
 		sensorID = request.getParameter("sensorID");
-		System.out.println(sensorID);
 		if((sensor = (Sensor)HibernateUtil.get(Sensor.class, sensorID))!=null){
 			HibernateUtil.delete(sensor);
 			TCPServer.getInstance().getSensorIDs().remove(sensorID);
 			//将注销的Sensor从TCPServer的保存表中删除
-			System.out.println("SensorIDs"+TCPServer.getInstance().getSensorIDs());
+			System.out.println("TCPServer中保存的Sensor列表为: "+TCPServer.getInstance().getSensorIDs());
 			System.out.println("注销成功!!!!!!!!!");
 		}
 		else{
@@ -35,7 +34,8 @@ public class UnregistrationServiceImp {
 		}
 	}
 	
-	public void deleteData(){
-		//TODO HQL
+	public void deleteData(Sensor sensor){
+		//Not necessary 删注册表时会自动删关联的insertion表
+		HibernateUtil.getSession().createQuery("from insertion where sensorid="+sensor.getSensorID());
 	}
 }

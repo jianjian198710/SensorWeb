@@ -23,6 +23,7 @@ import sensorweb.service.UnregistrationServiceImp;
  */
 @WebServlet("/Controller")
 public class Controller extends HttpServlet {
+
 	private static final long serialVersionUID = 1L;
        
     /**
@@ -106,7 +107,9 @@ public class Controller extends HttpServlet {
 			dispathcer.forward(request, response);
 		}
 		if(request.getParameter("startAll")!=null&&request.getParameter("startAll").equals("StartAll")){
+			System.out.println("RI!!!!!!!");
 			TCPServer.getInstance().start();
+			System.out.println("ri!!!!!!!");
 			RequestDispatcher dispathcer = request.getRequestDispatcher("ShowAllSensors.jsp");
 			dispathcer.forward(request, response);
 		}
@@ -123,4 +126,17 @@ public class Controller extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		new RegistrationServiceImp(request,response).register();
 	}
+	
+	@Override
+	public void destroy(){
+		super.destroy();
+		try {
+			System.out.println("πÿ±’ServerSocket!!!");
+			TCPServer.getInstance().getServerSocket().close();
+		} catch(IOException e) {
+			System.out.println("πÿ±’ServerSockety“Ï≥£!!!");
+		}
+	}
+
+	
 }

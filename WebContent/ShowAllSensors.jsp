@@ -1,3 +1,4 @@
+<%@page import="sensorweb.server.TCPServer"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
@@ -5,7 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<title>ShowALLSensor</title>
 </head>
 <body>
 	<form action="Controller">
@@ -18,17 +19,18 @@
 			<td><label>Northing</label></td>
 			<td><label>ObservableProperty</label></td>
 			<td><label>Data</label></td>
-			<td><label>Operation</label></td>
 		</tr>	
 		<c:forEach items="${sessionScope.AllSensors}" var="sensor">
 			<tr>
 			<td><div><input type="checkbox" name="sid" value="${sensor.sensorID}"/></div></td>
 			<td><label>${sensor.sensorID}</label></td>
+			<td><%=pageContext.getAttribute("sensor")%><%// if(TCPServer.getInstance().getSensorIDs().contains()){
+				//		request.getAttribute("sensor");
+				//	}%></td>
 			<td><label>${sensor.easting}</label></td>
 			<td><label>${sensor.northing}</label></td>
 			<td><label>${sensor.observableProperty}</label></td>
-			<td><label>${sensor.sensorID}</label></td>
-			<td><label>${sensor.sensorID}</label></td>
+			<td><label></label></td>
 			</tr>
 		</c:forEach>
 	</table>
