@@ -1,13 +1,14 @@
 package sensorweb.javaBean;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import com.google.code.morphia.annotations.Entity;
+import com.google.code.morphia.annotations.Id;
 
-@Entity
-@Table(name="REGISTRATION")
+
+
+@Entity("sensors")
 public class Sensor {
 	//Show in SensorML
+	@Id
 	private String sensorID;
 	private String description;
 	private String keyword;
@@ -26,7 +27,6 @@ public class Sensor {
 		this.sensorID = SensorID;
 	}
 	
-	@Id
 	public String getSensorID() {
 		return sensorID;
 	}

@@ -1,34 +1,23 @@
 package sensorweb.javaBean;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import org.bson.types.ObjectId;
 
-@Entity
-@Table(name="Insertion")
+import com.google.code.morphia.annotations.Entity;
+import com.google.code.morphia.annotations.Id;
+import com.google.code.morphia.annotations.Reference;
+
+
+@Entity("datas")
 public class Data {
-	
-	private int id;
+	@Id
+	ObjectId id;
+	@Reference(lazy=true)
 	private Sensor sensor;
 	private String value;
 	private String timeStamp;
 	private String observableProperty;
 	private String uom;
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	@ManyToOne
-    @JoinColumn(name="sensorID")
+
 	public Sensor getSensor() {
 		return sensor;
 	}
