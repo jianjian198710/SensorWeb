@@ -5,19 +5,19 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.net.SocketException;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import sensorweb.javaBean.Data;
 import sensorweb.javaBean.Sensor;
-import sensorweb.service.HibernateUtil;
 import sensorweb.service.InsertServiceImp;
+import sensorweb.util.MongoUtil;
+
+import com.google.code.morphia.query.Query;
 
 
 
@@ -51,13 +51,12 @@ public class TCPServer{
 
 	public void start() throws IOException {
 		System.out.println("执行start方法!!!!!!!");
-		@SuppressWarnings("rawtypes")
-		List allsensorID =  HibernateUtil.getSession().createQuery("select s.sensorID from Sensor as s").list();
-		for(Object sensorID: allsensorID){
-			if(sensorID instanceof java.lang.String){
-				this.getSensorIDs().add((String)sensorID);
-			}
+		
+		Query<Sensor> Sensors = MongoUtil.ds.createQuery(Sensor.class).retrievedFields(true, "sensorID");
+		for(Sensor sensor:Sensors.fetch()){
+			this.getSensorIDs().add(sensor.getSensorID());
 		}
+		
 		System.out.println("TCPServer中保存的Sensor列表为: "+this.getSensorIDs());
 		if(serverSocket==null){
 			System.out.println("启动ServerSocket!!!");

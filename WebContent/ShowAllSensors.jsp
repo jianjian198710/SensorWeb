@@ -24,9 +24,15 @@
 			<tr>
 			<td><div><input type="checkbox" name="sid" value="${sensor.sensorID}"/></div></td>
 			<td><label>${sensor.sensorID}</label></td>
-			<td><%=pageContext.getAttribute("sensor")%><%// if(TCPServer.getInstance().getSensorIDs().contains()){
-				//		request.getAttribute("sensor");
-				//	}%></td>
+			
+			<td>
+			<c:forEach items="${sessionScope.StartedSensorIds}" var="sensorIds">
+				<c:if test="${sensorIds == sensor.sensorID }">
+					Start!!!
+				</c:if>
+			</c:forEach>
+			</td>
+					
 			<td><label>${sensor.easting}</label></td>
 			<td><label>${sensor.northing}</label></td>
 			<td><label>${sensor.observableProperty}</label></td>

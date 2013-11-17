@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import sensorweb.javaBean.Data;
 import sensorweb.javaBean.Sensor;
 import sensorweb.server.TCPServer;
+import sensorweb.util.MongoUtil;
 
 
 public class RegistrationServiceImp {
@@ -52,7 +53,8 @@ public class RegistrationServiceImp {
 		String uom = request.getParameter("uom");
 		
 		//如果DB中不存在该Sensor 插入到注册表中
-		if(HibernateUtil.get(Sensor.class, sensorID)==null){
+//		if(HibernateUtil.get(Sensor.class, sensorID)==null){
+		if(MongoUtil.ds.createQuery(Sensor.class).field("sensorID").equal(sensorID).get()==null){
 			System.out.println("开始注册!");
 			sensor.setSensorID(sensorID);
 			sensor.setDescription(description);
@@ -67,7 +69,7 @@ public class RegistrationServiceImp {
 			sensor.setUom(uom);
 			
 			System.out.println("SensorID:"+sensor.getSensorID());
-			HibernateUtil.add(sensor);
+			MongoUtil.add(sensor);
 			System.out.println("注册成功!");
 			
 			//将新注册的Sensor加入到TCPServer的保存表中
@@ -82,9 +84,8 @@ public class RegistrationServiceImp {
 		}
 	}
 	
-	@SuppressWarnings("unchecked")
 	public ArrayList<Sensor> getAllSensorsFromDB(){
-		this.setSensors((ArrayList<Sensor>) HibernateUtil.getSession().createQuery("from Sensor").list());
+		this.setSensors((ArrayList<Sensor>) MongoUtil.ds.createQuery(Sensor.class).asList());
 		return this.getSensors();
 	}
 	
@@ -92,6 +93,7 @@ public class RegistrationServiceImp {
 		sensors = this.getAllSensorsFromDB();
 		HttpSession session = request.getSession();
 		session.setAttribute("AllSensors", sensors);
+		session.setAttribute("StartedSensorIds", TCPServer.getInstance().getSensorIDs());
 		RequestDispatcher dispatcher= request.getRequestDispatcher("ShowAllSensors.jsp");
 		dispatcher.forward(request, response);
 	}
