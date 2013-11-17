@@ -1,3 +1,0 @@
-11-15 16:56:55 jdbc[2]: exception
-org.h2.jdbc.JdbcSQLException: Table "INSERTION" not found; SQL statement:
-alter table Insertion drop constraint FK_r2haf8yxh7jrhblr27m6wwni6 [42102-172]
