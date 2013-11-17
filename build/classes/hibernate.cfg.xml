@@ -4,13 +4,14 @@
 		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
     <session-factory>
-        <property name="hibernate.connection.driver_class">org.gjt.mm.mysql.Driver</property>
+        <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
         <property name="hibernate.connection.password">198710</property>
-        <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/jianjian</property>
+        <property name="hibernate.connection.url">jdbc:mysql://localhost/jianjian</property>
         <property name="hibernate.connection.username">root</property>
-        <property name="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</property>
-        <property name="hibernate.hbm2ddl.auto">update</property>
+        <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+        <property name="hbm2ddl.auto">update</property>  
         <property name="hibernate.show_sql">true</property>
-        <mapping resource="JavaBean/Sensor.hbm.xml"/>
+        <mapping class="JavaBean.Sensor"/>
+        <mapping class="JavaBean.Data"/>
     </session-factory>
 </hibernate-configuration>
