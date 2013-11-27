@@ -23,7 +23,8 @@ public class UnregistrationServiceImp {
 	
 	public void unregister(){
 		sensorID = request.getParameter("sensorID");
-		if((sensor = MongoUtil.ds.createQuery(Sensor.class).field("senosrID").equal(sensorID).get())!=null){
+		System.out.println(sensorID);
+		if((sensor = MongoUtil.ds.createQuery(Sensor.class).field("_id").equal(sensorID).get())!=null){
 			MongoUtil.delete(sensor);
 			TCPServer.getInstance().getSensorIDs().remove(sensorID);
 			//将注销的Sensor从TCPServer的保存表中删除

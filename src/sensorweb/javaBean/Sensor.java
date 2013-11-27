@@ -7,7 +7,7 @@ import com.google.code.morphia.annotations.Id;
 
 @Entity("sensors")
 public class Sensor {
-	//Show in SensorML
+	//注意 sensorID由于做主键在数据库保存名为"_id"
 	@Id
 	private String sensorID;
 	private String description;

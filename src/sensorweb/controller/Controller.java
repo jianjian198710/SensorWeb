@@ -107,9 +107,7 @@ public class Controller extends HttpServlet {
 			dispathcer.forward(request, response);
 		}
 		if(request.getParameter("startAll")!=null&&request.getParameter("startAll").equals("StartAll")){
-			System.out.println("RI!!!!!!!");
 			TCPServer.getInstance().start();
-			System.out.println("ri!!!!!!!");
 			RequestDispatcher dispathcer = request.getRequestDispatcher("ShowAllSensors.jsp");
 			dispathcer.forward(request, response);
 		}
