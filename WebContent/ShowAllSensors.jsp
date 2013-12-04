@@ -6,6 +6,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+    <style type="text/css">
+      html { height: 100% }
+      body { height: 100%; margin: 0; padding: 0 }
+      #map-canvas { height: 50% ; postion:absolute; top:100px; width:50%}
+    </style>
 <title>ShowALLSensor</title>
 </head>
 <body>
@@ -47,5 +52,38 @@
 		<input type="submit" name="stopAll" value="StopAll"/>
 		</div>
 	</form>
+	<input type="button" name="showMap" value="showMap" onclick="showMap();"/>
+	<br/>
+	<div id="map-canvas" style="display:block">
+	</div>
 </body>
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+<script type="text/javascript">
+function showMap(){
+	alert(document.getElementById("map-canvas").style.display);
+	if(document.getElementById("map-canvas").style.display=="block"){
+		document.getElementById("map-canvas").style.display="none";
+	}else if(document.getElementById("map-canvas").style.display=="none"){
+		document.getElementById("map-canvas").style.display="block";
+	}
+} 
+function initialize() {
+	  var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
+	  var mapOptions = {
+	    zoom: 4,
+	    center: myLatlng
+	  }
+	  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+
+	  var marker = new google.maps.Marker({
+	      position: myLatlng,
+	      map: map,
+	      title: 'Hello World!'
+	  });
+	}
+
+	google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+
+
 </html>
