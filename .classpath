@@ -13,7 +13,7 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/Log4j"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/JDBC"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.USER_LIBRARY/SpringLib"/>
-	<classpathentry kind="lib" path="C:/ThirdPartyTools/mongo-2.4.jar"/>
-	<classpathentry kind="lib" path="C:/ThirdPartyTools/morphia-0.98.jar"/>
+	<classpathentry kind="lib" path="H:/Developer/ThirdPartyTools/mongo-2.4.jar"/>
+	<classpathentry kind="lib" path="H:/Developer/ThirdPartyTools/morphia-0.98.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

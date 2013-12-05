@@ -25,7 +25,7 @@ public class TCPClient1 {
 				@Override
 				public void run(){
 					int random = new Random().nextInt(MAX_VALUE); //0,1,2
-					String s = "AAA##Temperature##"+random+"##degree"+"\n";
+					String s = "sensor01##Temperature##"+random+"##degree"+"\n";
 						try {
 							os.write(s.getBytes());
 							os.flush();
