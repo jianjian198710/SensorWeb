@@ -9,7 +9,7 @@
     <style type="text/css">
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
-      #map-canvas { height: 50% ; postion:absolute; top:100px; width:50%}
+      #map-canvas { height: 50% ; postion:absolute; top:100px; width:100%}
     </style>
 <title>ShowALLSensor</title>
 </head>
@@ -38,8 +38,8 @@
 			</c:forEach>
 			</td>
 					
-			<td><label>${sensor.easting}</label></td>
-			<td><label>${sensor.northing}</label></td>
+			<td><input type="text" name="easting" value="${sensor.easting}" readonly="readonly"/></td>
+			<td><input type="text" name="northing" value="${sensor.northing}" readonly="readonly"/></td>
 			<td><label>${sensor.observableProperty}</label></td>
 			<td><label></label></td>
 			</tr>
@@ -52,7 +52,7 @@
 		<input type="submit" name="stopAll" value="StopAll"/>
 		</div>
 	</form>
-	<input type="button" name="showMap" value="showMap" onclick="showMap();"/>
+	<input type="button" id="showMap" name="showMap" value="showMap" onclick="initialize2();" />
 	<br/>
 	<div id="map-canvas" style="display:block">
 	</div>
@@ -60,13 +60,12 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script type="text/javascript">
 function showMap(){
-	alert(document.getElementById("map-canvas").style.display);
 	if(document.getElementById("map-canvas").style.display=="block"){
 		document.getElementById("map-canvas").style.display="none";
 	}else if(document.getElementById("map-canvas").style.display=="none"){
 		document.getElementById("map-canvas").style.display="block";
 	}
-} 
+}  
 function initialize() {
 	  var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
 	  var mapOptions = {
@@ -80,9 +79,26 @@ function initialize() {
 	      map: map,
 	      title: 'Hello World!'
 	  });
-	}
+}
 
-	google.maps.event.addDomListener(window, 'load', initialize);
+function initialize2() {
+	  alert("Start to get postion");
+	  var eastings = document.getElementsByName("easting");
+	  var northings = document.getElementsByName("northing");
+	  console.log(eastings);
+	  console.log(northings);
+	  if(eastings.length==northings.length){
+		  var positions = new Array(eastings.length);
+		  var person = new Object();
+		  for(var i=0;i<eastings.length;i++){
+		  	positio 			  
+		  }
+	  }
+}
+
+
+	var canvas = document.getElementById("showMap");
+	google.maps.event.addDomListener(canvas, 'dblclick', initialize);
 </script>
 
 
