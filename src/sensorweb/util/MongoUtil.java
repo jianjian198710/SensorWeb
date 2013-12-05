@@ -4,6 +4,8 @@ import java.net.UnknownHostException;
 
 import com.google.code.morphia.Datastore;
 import com.google.code.morphia.Morphia;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
 import com.mongodb.Mongo;
 import com.mongodb.MongoException;
 import com.mongodb.WriteConcern;
@@ -12,8 +14,10 @@ public class MongoUtil{
 
 	static Morphia morphia;
 	static Mongo mongo;
-	public static Datastore ds;
+	public static DBCollection datas;
+	static DB db;
 
+	public static Datastore ds;
 	
     private MongoUtil() {   
     }   
@@ -22,6 +26,9 @@ public class MongoUtil{
 		morphia = new Morphia();
 		try {
 			mongo = new Mongo();
+			db = mongo.getDB("sensorweb");
+			datas = db.getCollection("datas");
+
 		} catch(UnknownHostException | MongoException e) {
 			e.printStackTrace();
 		}
