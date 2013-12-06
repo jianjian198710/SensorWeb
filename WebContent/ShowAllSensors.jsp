@@ -71,7 +71,7 @@ function initialize() {
 	  var mapOptions = {
 	    zoom: 4,
 	    center: myLatlng
-	  }
+	  };
 	  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
 
 	  var marker = new google.maps.Marker({
@@ -82,23 +82,51 @@ function initialize() {
 }
 
 function initialize2() {
-	  alert("Start to get postion");
+	  console.log("Start to get postion");
 	  var eastings = document.getElementsByName("easting");
 	  var northings = document.getElementsByName("northing");
 	  console.log(eastings);
 	  console.log(northings);
-	  if(eastings.length==northings.length){
-		  var positions = new Array(eastings.length);
-		  var person = new Object();
+	  
+	  var easting = Number(eastings[0].value);
+	  var northing = Number(northings[0].value);
+	  console.log("easting:"+easting);
+	  console.log("northing:"+northing);
+	  
+	  var myLatlng = new google.maps.LatLng(northing,easting);  
+
+	  var mapOptions = {
+	    zoom: 4,
+	    center: myLatlng
+	  };
+	  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+	  
+	  
+/* 	  var myLatLng2 = new google.maps.LatLng(-24.363892, 131.044932);
+ 	  var marker2 = new google.maps.Marker({
+	        position: myLatLng2,
+	        map: map,
+	        title: 'Hello World!'
+	    });  */
+	  
+  	  if(eastings.length==northings.length){
+ 		  console.log(eastings.length);
 		  for(var i=0;i<eastings.length;i++){
-		  	positio 			  
+			  console.log(eastings[i].value+","+northings[i].value);
+		      var myLatLng = new google.maps.LatLng(Number(northings[0].value),Number(eastings[0].value));
+			  var marker = new google.maps.Marker({
+			        position: myLatLng,
+			        map: map,
+			        title: 'Hello World!'
+			    });
 		  }
-	  }
+	  }  
+	  console.log("Finish marker");
 }
 
 
 	var canvas = document.getElementById("showMap");
-	google.maps.event.addDomListener(canvas, 'dblclick', initialize);
+	google.maps.event.addDomListener(window, 'load', initialize2);
 </script>
 
 
