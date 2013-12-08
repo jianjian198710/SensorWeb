@@ -4,9 +4,6 @@ package sensorweb.service;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.google.code.morphia.query.Query;
-import com.mongodb.BasicDBObject;
-
 import sensorweb.javaBean.Data;
 import sensorweb.javaBean.Sensor;
 import sensorweb.server.TCPServer;
@@ -31,9 +28,9 @@ public class UnregistrationServiceImp {
 		if((sensor = MongoUtil.ds.createQuery(Sensor.class).field("_id").equal(sensorID).get())!=null){
 			MongoUtil.delete(sensor);
 			deleteData(sensorID);
-			TCPServer.getInstance().getSensorIDs().remove(sensorID);
+			TCPServer.getInstance().getSensorStatus().put(sensorID, false);
 			//将注销的Sensor从TCPServer的保存表中删除
-			System.out.println("TCPServer中保存的Sensor列表为: "+TCPServer.getInstance().getSensorIDs());
+			System.out.println("TCPServer中保存的Sensor列表为: "+TCPServer.getInstance().getSensorStatus());
 			System.out.println("注销成功!!!!!!!!!");
 		}
 		else{
@@ -45,8 +42,10 @@ public class UnregistrationServiceImp {
 		//Not necessary 删注册表时会自动删关联的insertion表
 		//在MongoDB中is necessary 必须手动删除datas集合中的相关数据
 		//HibernateUtil.getSession().createQuery("from insertion where sensorid="+sensor.getSensorID());
-		BasicDBObject data = new BasicDBObject();
-		data.put("sensor.$id",sensorID);
-		MongoUtil.datas.remove(data);
+		//用Sensor做Reference的删除
+		//BasicDBObject data = new BasicDBObject();
+		//data.put("sensor.$id",sensorID);
+		//MongoUtil.datas.remove(data);
+		MongoUtil.ds.delete(MongoUtil.ds.createQuery(Data.class).field("sensorId").equal(sensorID));
 	}
 }

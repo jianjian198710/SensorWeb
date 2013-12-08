@@ -8,7 +8,9 @@ import java.net.Socket;
 import java.nio.charset.Charset;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -28,13 +30,14 @@ public class TCPServer{
 	private ExecutorService executor;
 	
 	private static final int PORT = 7878;
+	private static final boolean SENSOR_START = true;
+	private static final boolean SENSOR_STOP = false;
 
 	private TCPServer() {
 		executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()*50);
 	}
 	
-//	private ArrayList<String> allSensorID = new ArrayList<String>();
-	private HashSet<String> sensorIDs = new HashSet<String>();
+	private HashMap<String,Boolean> sensorStatus = new HashMap<String,Boolean>();
 	
 	// 通过单例模式创建TCPServer
 	public static TCPServer getInstance() {
@@ -49,15 +52,15 @@ public class TCPServer{
 		return instance;
 	}
 
-	public void start() throws IOException {
-		System.out.println("执行start方法!!!!!!!");
+	public void startAll() throws IOException {
+		System.out.println("执行startAll方法!!!!!!!");
 		
 		Query<Sensor> Sensors = MongoUtil.ds.createQuery(Sensor.class).retrievedFields(true, "sensorID");
 		for(Sensor sensor:Sensors.fetch()){
-			this.getSensorIDs().add(sensor.getSensorID());
+			this.getSensorStatus().put(sensor.getSensorID(),SENSOR_START);
 		}
 		
-		System.out.println("TCPServer中保存的Sensor列表为: "+this.getSensorIDs());
+		System.out.println("TCPServer中保存的Sensor列表为: "+this.getSensorStatus());
 		if(serverSocket==null){
 			System.out.println("启动ServerSocket!!!");
 			serverSocket = new ServerSocket(PORT);
@@ -66,13 +69,15 @@ public class TCPServer{
 				Socket socket = serverSocket.accept();
 				executor.execute(new DataProcessor(socket));
 			}
-
 		}
 	}
 	
-	public void stop() throws IOException{
-		this.getSensorIDs().clear();
-		System.out.println("TCPServer中保存的Sensor列表为: "+this.getSensorIDs());
+	public void stopAll() throws IOException{
+		for(Map.Entry<String, Boolean> entry: this.getSensorStatus().entrySet()){
+			String key = entry.getKey();
+			this.sensorStatus.put(key, SENSOR_STOP);
+		}
+		System.out.println("TCPServer中保存的Sensor列表为: "+this.getSensorStatus());
 	}
 	
 	public void startSome(HashSet<String> selectedSensorIDs) throws IOException{
@@ -81,9 +86,17 @@ public class TCPServer{
 			return;
 		}else{
 			System.out.println("selectedSensorIDs is: "+selectedSensorIDs);
-			this.getSensorIDs().addAll(selectedSensorIDs);
+			for(String selectedSensorID:selectedSensorIDs){
+				this.getSensorStatus().put(selectedSensorID, SENSOR_START);
+			}
+			Query<Sensor> Sensors = MongoUtil.ds.createQuery(Sensor.class).retrievedFields(true, "sensorID");
+			for(Sensor sensor:Sensors.fetch()){
+				if(!this.getSensorStatus().containsKey(sensor.getSensorID())){
+					this.getSensorStatus().put(sensor.getSensorID(),SENSOR_STOP);
+				}
+			}
 		}
-		System.out.println("TCPServer中保存的Sensor列表为: "+this.getSensorIDs());
+		System.out.println("TCPServer中保存的Sensor列表为: "+this.getSensorStatus());
 		if(serverSocket==null){
 			System.out.println("启动ServerSocket!!!");
 			serverSocket = new ServerSocket(PORT);
@@ -99,13 +112,13 @@ public class TCPServer{
 			return;
 		}else{
 			System.out.println("selectedSensorIDs is: "+selectedSensorIDs);
-			for(String sensorID: selectedSensorIDs){
-				if(this.getSensorIDs().contains(sensorID)){
-					this.getSensorIDs().remove(sensorID);
+			for(String selectedSensorID: selectedSensorIDs){
+				if(this.getSensorStatus().containsKey(selectedSensorID)){
+					this.getSensorStatus().put(selectedSensorID, SENSOR_STOP);
 				}
 			}
 		}
-		System.out.println("TCPServer中保存的Sensor列表为: "+this.getSensorIDs());
+		System.out.println("TCPServer中保存的Sensor列表为: "+this.getSensorStatus());
 	}
 	
 	private final class DataProcessor implements Runnable{
@@ -123,13 +136,12 @@ public class TCPServer{
 				while((s = br.readLine())!=null){
 					//sensorID+"##Temperature##"+data+"##degree";
 					String[] receinfo = s.split("##");
-					if(TCPServer.getInstance().getSensorIDs().contains(receinfo[0])){
-						System.out.println("!!!!!!!收到有用信息"+s);
-						Sensor sensor = new Sensor();
+					if(TCPServer.getInstance().getSensorStatus().containsKey(receinfo[0])&&
+							TCPServer.getInstance().getSensorStatus().get(receinfo[0])==SENSOR_START){
+						System.out.println("有用信息!!!"+s);
 						Data data = new Data();
-						sensor.setSensorID(receinfo[0]);
+						data.setSensorID(receinfo[0]);
 						data.setValue(receinfo[2]);
-						data.setSensor(sensor);
 						data.setObservableProperty(receinfo[1]);
 						data.setUom(receinfo[3]);
 						//打时间戳
@@ -144,13 +156,13 @@ public class TCPServer{
 			}
 		}
 	}
-
-	public HashSet<String> getSensorIDs() {
-		return sensorIDs;
+	
+	public HashMap<String, Boolean> getSensorStatus() {
+		return sensorStatus;
 	}
 
-	public void setSensorIDs(HashSet<String> sensorIDs) {
-		this.sensorIDs = sensorIDs;
+	public void setSensorStatus(HashMap<String, Boolean> sensorStatus) {
+		this.sensorStatus = sensorStatus;
 	}
 
 	public boolean isFlag() {

@@ -27,6 +27,10 @@ public class Sensor {
 		this.sensorID = SensorID;
 	}
 	
+	public String toString(){
+		return sensorID;
+	}
+	
 	public String getSensorID() {
 		return sensorID;
 	}

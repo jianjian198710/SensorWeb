@@ -4,25 +4,24 @@ import org.bson.types.ObjectId;
 
 import com.google.code.morphia.annotations.Entity;
 import com.google.code.morphia.annotations.Id;
-import com.google.code.morphia.annotations.Reference;
 
 
 @Entity("datas")
 public class Data {
 	@Id
 	ObjectId id;
-	@Reference(lazy=true)
-	private Sensor sensor;
+
+	private String sensorID;
 	private String value;
 	private String timeStamp;
 	private String observableProperty;
 	private String uom;
-
-	public Sensor getSensor() {
-		return sensor;
+	
+	public String getSensorID() {
+		return sensorID;
 	}
-	public void setSensor(Sensor sensor) {
-		this.sensor = sensor;
+	public void setSensorID(String sensorID) {
+		this.sensorID = sensorID;
 	}
 	public String getValue() {
 		return value;

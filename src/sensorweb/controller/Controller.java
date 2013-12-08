@@ -14,6 +14,7 @@ import javax.xml.bind.JAXBException;
 
 import sensorweb.server.TCPServer;
 import sensorweb.service.CreateSensorMLServiceImp;
+import sensorweb.service.QueryServiceImp;
 import sensorweb.service.RegistrationServiceImp;
 import sensorweb.service.UnregistrationServiceImp;
 
@@ -107,13 +108,26 @@ public class Controller extends HttpServlet {
 			dispathcer.forward(request, response);
 		}
 		if(request.getParameter("startAll")!=null&&request.getParameter("startAll").equals("StartAll")){
-			TCPServer.getInstance().start();
+			TCPServer.getInstance().startAll();
 			RequestDispatcher dispathcer = request.getRequestDispatcher("ShowAllSensors.jsp");
 			dispathcer.forward(request, response);
 		}
 		if(request.getParameter("stopAll")!=null&&request.getParameter("stopAll").equals("StopAll")){
-			TCPServer.getInstance().stop();
+			TCPServer.getInstance().stopAll();
 			RequestDispatcher dispathcer = request.getRequestDispatcher("ShowAllSensors.jsp");
+			dispathcer.forward(request, response);
+		}
+		if(request.getParameter("detailedData")!=null&&request.getParameter("detailedData").equals("Detail")){
+			QueryServiceImp qs = new QueryServiceImp(request, response);
+			qs.getAllData(request, response);
+			RequestDispatcher dispathcer = request.getRequestDispatcher("DetailedData.jsp");
+			dispathcer.forward(request, response);
+		}
+		//DetailedData.jsp Ajax
+		if(request.getParameter("count")!=null){
+			QueryServiceImp qs = new QueryServiceImp(request, response);
+			qs.getNewData(request, response);
+			RequestDispatcher dispathcer = request.getRequestDispatcher("NewData.jsp");
 			dispathcer.forward(request, response);
 		}
 	}

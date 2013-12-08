@@ -72,10 +72,6 @@ public class RegistrationServiceImp {
 			MongoUtil.add(sensor);
 			System.out.println("注册成功!");
 			
-			//将新注册的Sensor加入到TCPServer的保存表中
-			TCPServer.getInstance().getSensorIDs().add(sensorID);
-			System.out.println("注册成功后TCPServer中保存的Sensor列表为: "+TCPServer.getInstance().getSensorIDs());
-			
 			RequestDispatcher dispathcer = request.getRequestDispatcher("RegistrationSuccess.jsp");
 			dispathcer.forward(request, response);
 		}else{
@@ -93,7 +89,7 @@ public class RegistrationServiceImp {
 		sensors = this.getAllSensorsFromDB();
 		HttpSession session = request.getSession();
 		session.setAttribute("AllSensors", sensors);
-		session.setAttribute("StartedSensorIds", TCPServer.getInstance().getSensorIDs());
+		session.setAttribute("SensorStatus", TCPServer.getInstance().getSensorStatus());
 		RequestDispatcher dispatcher= request.getRequestDispatcher("ShowAllSensors.jsp");
 		dispatcher.forward(request, response);
 	}
