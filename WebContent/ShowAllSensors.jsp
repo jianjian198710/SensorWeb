@@ -17,13 +17,11 @@
 	<form action="Controller">
 	<table>
 		<tr>
-			<td><div></div></td>
 			<td><label>SensorID</label></td>
 			<td><label>Status</label></td>
 			<td><label>Easting</label></td>
 			<td><label>Northing</label></td>
 			<td><label>ObservableProperty</label></td>
-			<td><label>Data</label></td>
 		</tr>	
 		<c:forEach items="${sessionScope.AllSensors}" var="sensor">
 			<tr>
@@ -86,7 +84,7 @@ function initialize() {
 	  var myLatlng = new google.maps.LatLng(northing,easting);  
 
 	  var mapOptions = {
-	    zoom: 14,
+	    zoom: 4,
 	    center: myLatlng
 	  };
 	  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);

@@ -89,6 +89,11 @@ public class RegistrationServiceImp {
 		sensors = this.getAllSensorsFromDB();
 		HttpSession session = request.getSession();
 		session.setAttribute("AllSensors", sensors);
+		if(TCPServer.getInstance().getSensorStatus().isEmpty()){
+			for(Sensor sensor:sensors){
+				TCPServer.getInstance().getSensorStatus().put(sensor.getSensorID(), false);
+			}
+		}
 		session.setAttribute("SensorStatus", TCPServer.getInstance().getSensorStatus());
 		RequestDispatcher dispatcher= request.getRequestDispatcher("ShowAllSensors.jsp");
 		dispatcher.forward(request, response);

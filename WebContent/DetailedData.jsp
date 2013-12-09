@@ -1,14 +1,19 @@
-<%@ page language="java" contentType="text/html; charset=GB18030"
+<%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="GB18030"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=GB18030">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>DetailedData</title>
 </head>
 <body>
 	<table>
+		<tr>
+			<div id="newNumber">
+			
+			</div>
+		</tr>
 		<tr>
 			<td><label>TimeStamp</label></td>
 			<td><label>SensorID</label></td>
@@ -75,11 +80,13 @@ function processResponse()
 			//得到服务器响应
 /* 			var prices = xmlrequest.responseText.split("$"); */
 			//通过FireBug的Console可以看到该日志
+			
 			console.log("Good!!!");
 /* 			document.getElementById("mysql").innerHTML = prices[0];
 			document.getElementById("tomcat").innerHTML = prices[1];
 			document.getElementById("jetty").innerHTML = prices[2]; */
 			//设置一秒钟后再次发送请求
+			document.getElementById("newNumber").innerHTML=xmlrequest.responseText;
 			setTimeout("getData()",10000);
 		}
 	}
