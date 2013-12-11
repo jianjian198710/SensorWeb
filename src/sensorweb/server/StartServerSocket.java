@@ -16,17 +16,26 @@ import sensorweb.service.InsertServiceImp;
 
 public class StartServerSocket implements Runnable{
 	
+	private static StartServerSocket startServerSocket;
+	
 	private ServerSocket serverSocket = null;
 	private static final int PORT = 7878;
 	private ExecutorService executor;
 	
-	public StartServerSocket(){
+	private StartServerSocket(){
 		executor = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors()*50);
 	}
 	
+	public static StartServerSocket getInstance(){
+		if(startServerSocket==null){
+			startServerSocket =  new StartServerSocket();
+		}
+		return startServerSocket;
+	}
+	
+	
 	@Override
 	public void run(){
-		startServerSocket();
 		startReceive();
 	}
 	
@@ -43,13 +52,22 @@ public class StartServerSocket implements Runnable{
 		}
 	}
 	
+	public void closeServerSocket(){
+		try {
+			getServerSocket().close();
+			System.out.println("关闭ServerSocket成功!");
+		} catch (IOException e) {
+			System.out.println("关闭ServerSocket失败!");
+		}
+	}
+	
 	public void startReceive(){
 		while(true){
-			try {
+			try{
 				Socket socket = serverSocket.accept();
 				executor.execute(new DataProcessor(socket));
 			} catch(IOException e) {
-				e.printStackTrace();
+				break;
 			}
 		}
 	}
@@ -89,8 +107,13 @@ public class StartServerSocket implements Runnable{
 					}
 				}
 			}catch(IOException e){
+				e.printStackTrace();
 				System.out.println("读取Socket错误！！！");
 			}
 		}
+	}
+
+	public ServerSocket getServerSocket() {
+		return serverSocket;
 	}
 }

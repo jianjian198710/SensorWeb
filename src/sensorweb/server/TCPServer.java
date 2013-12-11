@@ -1,9 +1,9 @@
 package sensorweb.server;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import sensorweb.javaBean.Sensor;
 import sensorweb.util.MongoUtil;
@@ -17,7 +17,7 @@ public class TCPServer{
 
 	private TCPServer() {}
 	
-	private HashMap<String,Boolean> sensorStatus = new HashMap<String,Boolean>();
+	private ConcurrentHashMap<String,Boolean> sensorStatus = new ConcurrentHashMap<String,Boolean>();
 	
 	// 通过单例模式创建TCPServer
 	public static TCPServer getInstance() {
@@ -33,13 +33,10 @@ public class TCPServer{
 	}
 
 	public void startAll() throws IOException {
-		System.out.println("执行startAll方法!!!!!!!");
-		
 		Query<Sensor> Sensors = MongoUtil.ds.createQuery(Sensor.class).retrievedFields(true, "sensorID");
 		for(Sensor sensor:Sensors.fetch()){
 			this.getSensorStatus().put(sensor.getSensorID(),SENSOR_START);
 		}
-		
 		System.out.println("TCPServer中保存的Sensor列表为: "+this.getSensorStatus());
 	}
 	
@@ -84,11 +81,11 @@ public class TCPServer{
 		System.out.println("TCPServer中保存的Sensor列表为: "+this.getSensorStatus());
 	}
 	
-	public HashMap<String, Boolean> getSensorStatus() {
+	public ConcurrentHashMap<String, Boolean> getSensorStatus() {
 		return sensorStatus;
 	}
 
-	public void setSensorStatus(HashMap<String, Boolean> sensorStatus) {
+	public void setSensorStatus(ConcurrentHashMap<String, Boolean> sensorStatus) {
 		this.sensorStatus = sensorStatus;
 	}
 }

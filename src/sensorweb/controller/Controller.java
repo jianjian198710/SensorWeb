@@ -39,10 +39,9 @@ public class Controller extends HttpServlet {
 	@Override
 	public void init(ServletConfig config) throws ServletException{
 		super.init(config);
-		new StartServerSocket().start();
+		StartServerSocket.getInstance().startServerSocket();
+		StartServerSocket.getInstance().start();
 	}
-
-
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -156,13 +155,6 @@ public class Controller extends HttpServlet {
 	@Override
 	public void destroy(){
 		super.destroy();
-//		try {
-//			System.out.println("πÿ±’ServerSocket!!!");
-////			TCPServer.getInstance().getServerSocket().close();
-//		} catch(IOException e) {
-//			System.out.println("πÿ±’ServerSockety“Ï≥£!!!");
-//		}
+		StartServerSocket.getInstance().closeServerSocket();
 	}
-
-	
 }
