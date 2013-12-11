@@ -1,25 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="GB18030"%>
+    pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>  
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <style type="text/css">
+      #newNumber { background:none repeat scroll 0 0 #FEFDED;border:1px solid #F9F2A7;color:#F48C12;display:block;text-align:center;display:none;width:65%}
+    </style>
 <title>DetailedData</title>
 </head>
 <body>
+	<div style="display:none">
+	<form action="Controller">
+		<input type="submit"  id="refresh" name="refresh" value="refresh"/>
+	</form>
+	</div>
 	<table>
 		<tr>
-			<div id="newNumber">
-			
-			</div>
+			<div id="newNumber" onclick="getLatestData();" onmouseover="addLine();" onmouseout="resetLine();"/>
 		</tr>
 		<tr>
-			<td><label>TimeStamp</label></td>
-			<td><label>SensorID</label></td>
-			<td><label>ObservableProperty</label></td>
-			<td><label>Value</label></td>
-			<td><label>Uom</label></td>
+			<td><input type="text" value="time" readonly="readonly"/></td>
+			<td><input type="text" value="SensorID" readonly="readonly"/></td>
+			<td><input type="text" value="ObservableProperty" readonly="readonly"/></td>
+			<td><input type="text" value="Value" readonly="readonly"/></td>
+			<td><input type="text" value="Uom" readonly="readonly"/></td>
 		</tr>
 		<c:forEach items="${sessionScope.AllDatas}" var="data">
 			<tr>
@@ -31,6 +37,7 @@
 			</tr>
 		</c:forEach>
 	</table>
+
 </body>
 <script type="text/javascript">
 var xmlrequest;
@@ -60,10 +67,8 @@ function getData()
 {
 	var datas = document.getElementsByName("sensorId");
 	var count = datas.length;
-	console.log(count);
 	createXMLHttpRequest();
 	var uri = "Controller?count="+count;
-	console.log(uri);
 	xmlrequest.open("GET",uri,true);
  	xmlrequest.onreadystatechange = processResponse; 
 	xmlrequest.send(null);
@@ -77,20 +82,31 @@ function processResponse()
 	{
 		if(xmlrequest.status == 200)
 		{
-			//µÃµ½·şÎñÆ÷ÏìÓ¦
-/* 			var prices = xmlrequest.responseText.split("$"); */
-			//Í¨¹ıFireBugµÄConsole¿ÉÒÔ¿´µ½¸ÃÈÕÖ¾
-			
-			console.log("Good!!!");
-/* 			document.getElementById("mysql").innerHTML = prices[0];
-			document.getElementById("tomcat").innerHTML = prices[1];
-			document.getElementById("jetty").innerHTML = prices[2]; */
-			//ÉèÖÃÒ»ÃëÖÓºóÔÙ´Î·¢ËÍÇëÇó
-			document.getElementById("newNumber").innerHTML=xmlrequest.responseText;
+			//å¾—åˆ°æœåŠ¡å™¨å“åº”
+			if(xmlrequest.responseText.match("0 observation update")){
+				document.getElementById("newNumber").style.display="none";
+			}
+			else{
+				document.getElementById("newNumber").style.display="block";
+				document.getElementById("newNumber").innerHTML=xmlrequest.responseText;
+			}
+			//è®¾ç½®åç§’é’Ÿåå†æ¬¡å‘é€è¯·æ±‚
 			setTimeout("getData()",10000);
 		}
 	}
 }
 
+function getLatestData(){
+	document.getElementById("refresh").click();
+} 
+
+function addLine(){
+	document.getElementById("newNumber").style.background="none repeat scroll 0 0 #FFFDED0";
+ 	document.getElementById("newNumber").style.textDecoration="underline"; 
+}
+function resetLine(){
+	document.getElementById("newNumber").style.background="none repeat scroll 0 0 #FEFDED";
+ 	document.getElementById("newNumber").style.textDecoration="none"; 
+}
 </script>
 </html>

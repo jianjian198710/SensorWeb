@@ -105,7 +105,7 @@ function initialize() {
 }
 
 
-	var canvas = document.getElementById("showMap");
+/* 	var canvas = document.getElementById("showMap"); */
 	google.maps.event.addDomListener(window, 'load', initialize);
 </script>
 </html>

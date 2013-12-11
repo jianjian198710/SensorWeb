@@ -2,3 +2,7 @@
 2.根据状态标注不同颜色的Marker
 3.详细的Data数据显示
 4.数据分页
+
+Comments From Boelos
+1.创建serverSocket时候要用锁保护起来
+2.doGet/POST 里的方法必须是立马响应的方法

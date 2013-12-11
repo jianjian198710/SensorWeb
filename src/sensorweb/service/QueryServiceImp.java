@@ -28,7 +28,7 @@ public class QueryServiceImp {
 	}
 	
 	public void getAllData(HttpServletRequest request,HttpServletResponse respons){
-		Query<Data> datas = MongoUtil.ds.createQuery(Data.class);
+		Query<Data> datas = MongoUtil.ds.createQuery(Data.class).order("-timeStamp");
 		for(Data data:datas.fetch()){
 			this.getDatalist().add(data);
 		}		

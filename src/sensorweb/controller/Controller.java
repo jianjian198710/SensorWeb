@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -12,6 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBException;
 
+import sensorweb.server.StartServerSocket;
 import sensorweb.server.TCPServer;
 import sensorweb.service.CreateSensorMLServiceImp;
 import sensorweb.service.QueryServiceImp;
@@ -22,7 +24,7 @@ import sensorweb.service.UnregistrationServiceImp;
 /**
  * Servlet implementation class Controller
  */
-@WebServlet("/Controller")
+@WebServlet(urlPatterns="/Controller",loadOnStartup=0)
 public class Controller extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -32,8 +34,15 @@ public class Controller extends HttpServlet {
      */
     public Controller() {
         super();
-        // TODO Auto-generated constructor stub
     }
+    
+	@Override
+	public void init(ServletConfig config) throws ServletException{
+		super.init(config);
+		new StartServerSocket().start();
+	}
+
+
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -117,17 +126,22 @@ public class Controller extends HttpServlet {
 			RequestDispatcher dispathcer = request.getRequestDispatcher("ShowAllSensors.jsp");
 			dispathcer.forward(request, response);
 		}
+		
+		QueryServiceImp qs = new QueryServiceImp(request, response);
 		if(request.getParameter("detailedData")!=null&&request.getParameter("detailedData").equals("Detail")){
-			QueryServiceImp qs = new QueryServiceImp(request, response);
 			qs.getAllData(request, response);
 			RequestDispatcher dispathcer = request.getRequestDispatcher("DetailedData.jsp");
 			dispathcer.forward(request, response);
 		}
 		//DetailedData.jsp Ajax
 		if(request.getParameter("count")!=null){
-			QueryServiceImp qs = new QueryServiceImp(request, response);
 			qs.getNewData(request, response);
 			RequestDispatcher dispathcer = request.getRequestDispatcher("NewData.jsp");
+			dispathcer.forward(request, response);
+		}
+		if(request.getParameter("refresh")!=null){
+			qs.getAllData(request, response);
+			RequestDispatcher dispathcer = request.getRequestDispatcher("DetailedData.jsp");
 			dispathcer.forward(request, response);
 		}
 	}
@@ -142,12 +156,12 @@ public class Controller extends HttpServlet {
 	@Override
 	public void destroy(){
 		super.destroy();
-		try {
-			System.out.println("关闭ServerSocket!!!");
-			TCPServer.getInstance().getServerSocket().close();
-		} catch(IOException e) {
-			System.out.println("关闭ServerSockety异常!!!");
-		}
+//		try {
+//			System.out.println("关闭ServerSocket!!!");
+////			TCPServer.getInstance().getServerSocket().close();
+//		} catch(IOException e) {
+//			System.out.println("关闭ServerSockety异常!!!");
+//		}
 	}
 
 	
