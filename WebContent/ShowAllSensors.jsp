@@ -71,8 +71,12 @@ function showMap(){
 
 function initialize() {
 	  console.log("Start to get postion");
+	  var sensorids = document.getElementsByName("sid");
+	  var status = document.getElementsByName("status");
 	  var eastings = document.getElementsByName("easting");
 	  var northings = document.getElementsByName("northing");
+	  console.log(sensorids);
+	  console.log(status);
 	  console.log(eastings);
 	  console.log(northings);
 	  
@@ -92,18 +96,40 @@ function initialize() {
   	  if(eastings.length==northings.length){
  		  console.log(eastings.length);
 		  for(var i=0;i<eastings.length;i++){
-			  console.log(eastings[i].value+","+northings[i].value);
+			  console.log(sensorids[i].value+","+status[i].value+","+eastings[i].value+","+northings[i].value);
 		      var myLatLng = new google.maps.LatLng(Number(northings[i].value),Number(eastings[i].value));
+		      var title = sensorids[i].value.toString();
+		      if(status[i].value=="start"){
+		    	  var pinColor = "66FF00";
+		    	  var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"+pinColor,
+		    	        new google.maps.Size(21, 34),
+		    	        new google.maps.Point(0,0),
+		    	        new google.maps.Point(10, 34));
+		      }else{
+		    	  var pinColor = "FF3300";
+		    	  var pinImage = new google.maps.MarkerImage("http://chart.apis.google.com/chart?chst=d_map_pin_letter&chld=%E2%80%A2|"+pinColor,
+		    	        new google.maps.Size(21, 34),
+		    	        new google.maps.Point(0,0),
+		    	        new google.maps.Point(10, 34));
+		      }
+		      var contentString = '<div>'+sensorids[i].value+'</div>';
+		      var infowindow = new google.maps.InfoWindow({
+		          content: contentString
+		      });
 			  var marker = new google.maps.Marker({
 			        position: myLatLng,
 			        map: map,
-			        title: 'Hello World!'
-			    });
+			        animation: google.maps.Animation.DROP,
+			        icon: pinImage,
+			        title: title
+			  });
+			  google.maps.event.addListener(marker,'click',function(){
+				    infowindow.open(map,marker);
+			  });
 		  }
 	  }  
 	  console.log("Finish marker");
 }
-
 
 /* 	var canvas = document.getElementById("showMap"); */
 	google.maps.event.addDomListener(window, 'load', initialize);
