@@ -17,11 +17,12 @@
 	<form action="Controller">
 	<table>
 		<tr>
-			<td><label>SensorID</label></td>
-			<td><label>Status</label></td>
-			<td><label>Easting</label></td>
-			<td><label>Northing</label></td>
-			<td><label>ObservableProperty</label></td>
+			<td></td>
+			<td><input type="text" value="SensorID" readonly="readonly"/></td>
+			<td><input type="text" value="Status" readonly="readonly"/></td>
+			<td><input type="text" value="Easting" readonly="readonly"/></td>
+			<td><input type="text" value="Northing" readonly="readonly"/></td>
+			<td><input type="text" value="ObservableProperty" readonly="readonly"/></td>
 		</tr>	
 		<c:forEach items="${sessionScope.AllSensors}" var="sensor">
 			<tr>
@@ -69,10 +70,11 @@ function showMap(){
 	}
 } 
 
+var sensorids = document.getElementsByName("sid");
+var status = document.getElementsByName("status");
+
 function initialize() {
 	  console.log("Start to get postion");
-	  var sensorids = document.getElementsByName("sid");
-	  var status = document.getElementsByName("status");
 	  var eastings = document.getElementsByName("easting");
 	  var northings = document.getElementsByName("northing");
 	  console.log(sensorids);
@@ -113,9 +115,6 @@ function initialize() {
 		    	        new google.maps.Point(10, 34));
 		      }
 		      var contentString = '<div>'+sensorids[i].value+'</div>';
-		      var infowindow = new google.maps.InfoWindow({
-		          content: contentString
-		      });
 			  var marker = new google.maps.Marker({
 			        position: myLatLng,
 			        map: map,
@@ -123,15 +122,60 @@ function initialize() {
 			        icon: pinImage,
 			        title: title
 			  });
-			  google.maps.event.addListener(marker,'click',function(){
-				    infowindow.open(map,marker);
-			  });
+			  addInfoWindow(marker,contentString);
 		  }
-	  }  
+	  }
+  	  
+	  function addInfoWindow(marker, message){
+	  	  var infoWindow = new google.maps.InfoWindow({
+	  	      content: message
+	  	  });
+	  	  google.maps.event.addListener(marker, 'click', function () {
+	  	      infoWindow.open(map, marker);
+	  	  });
+	  }
+	  
 	  console.log("Finish marker");
 }
-
 /* 	var canvas = document.getElementById("showMap"); */
-	google.maps.event.addDomListener(window, 'load', initialize);
+google.maps.event.addDomListener(window, 'load', initialize);
+
+/* var xmlrequest;
+function createXMLHttpRequest()
+{
+	if(window.XMLHttpRequest)
+	{
+		xmlrequest = new XMLHttpRequest();
+	}
+	else if(window.ActiveXObject)
+	{
+		try
+		{
+			xmlrequest = new ActiveXObject("Msxml2.XMLHTTP");
+		}
+		catch(e)
+		{
+			try
+			{
+				xmlrequest = new ActiveXObject("Microsoft.XMLHTTP");
+			}catch(e){}
+		}
+	}
+}
+
+function getData(){
+	createXMLHttpRequest();
+	var uri = "Controller?
+	if(sensorids.length==status.lengths){
+		for(int i=0;i<sensorids-1.lengths;i++){
+			console.log("sensorid="+sensorids[i].value+"&"+"status"+status[i].value)
+			var temp = "sensorid="+sensorids[i].value+"&"+"status"+status[i].value;
+		}
+	}
+
+	xmlrequest.open("GET",uri,true);
+ 	xmlrequest.onreadystatechange = processResponse; 
+	xmlrequest.send(null);
+}  */
 </script>
 </html>

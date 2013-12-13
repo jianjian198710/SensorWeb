@@ -4,44 +4,62 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+ <style type="text/css">
+      input { width: 250px;}
+    </style>
 <title>Registration</title>
 </head>
 <body>
 <form action="Controller" method="GET">
-<div>
-<label>Please input the SensorID:</label><input type="text" id="sensorID" name="sensorID"/>
-</div>
-<div>
-<label>Please input the Description:</label><input type="text" id="description" name="description"/>
-</div>
-<div>
-<label>Please input the Keyword:</label><input type="text" id="keyword" name="keyword"/>
-</div>
-<div>
-<label>Please input the BeginTime:</label><input type="text" id="beginTime" name="beginTime"/>
-</div>
-<div>
-<label>Please input the EndTime:</label><input type="text" id="endTime" name="endTime"/>
-</div>
-<div>
-<label>Please input the SamplingTime:</label><input type="text" id="samplingTime" name="samplingTime"/>
-</div>
-<div>
-<label>Please input the Easting</label><input type="text" id="easting" name="easting"/>
-</div>
-<div>
-<label>Please input the Northing:</label><input type="text" id="northing" name="northing"/>
-</div>
-<div>
-<label>Please input the Altitude:</label><input type="text" id="altitude" name="altitude"/>
-</div>
-<div>
-<label>Please input the ObservableProperty:</label><input type="text" id="observableProperty" name="observableProperty" onkeyup="showHint(this.value)"/>
-</div>
-<div>
-<label>Please input the UOM:</label><input type="text" id="uom" name="uom"/>
-</div>
-<input type="submit" name="register" value="Register" />
+<table>
+<tr>
+	<td><input type="text" value="Please input the SensorID:" readonly="readonly"/></td>
+	<td><input type="text" id="sensorID" name="sensorID"/></td>
+</tr>
+<tr>
+	<td><input type="text" value="Please input the Description:" readonly="readonly"/></td>
+	<td><input type="text" id="description" name="description"/></td>
+</tr>
+<tr>
+	<td><input type="text" value="Please input the Keyword:" readonly="readonly"/></td>
+	<td><input type="text" id="keyword" name="keyword"/></td>
+</tr>
+<tr>
+	<td><input type="text" value="Please input the BeginTime:" readonly="readonly"/></td>
+	<td><input type="text" id="beginTime" name="beginTime"/></td>
+</tr>
+<tr>
+	<td><input type="text" value="Please input the EndTime:" readonly="readonly"/></td>
+	<td><input type="text" id="endTime" name="endTime"/></td>
+</tr>
+<tr>
+	<td><input type="text" value="Please input the SamplingTime:" readonly="readonly"/></td>
+	<td><input type="text" id="samplingTime" name="samplingTime"/></td>
+</tr>
+<tr>
+	<td><input type="text" value="Please input the Easting:" readonly="readonly"/></td>
+	<td><input type="text" id="easting" name="easting"/></td>
+</tr>
+<tr>
+	<td><input type="text" value="Please input the Northing:" readonly="readonly"/></td>
+	<td><input type="text" id="northing" name="northing"/></td>
+</tr>
+<tr>
+	<td><input type="text" value="Please input the Altitude:" readonly="readonly"/></td>
+	<td><input type="text" id="altitude" name="altitude"/></td>
+</tr>
+<tr>
+	<td><input type="text" value="Please input the ObservableProperty:" readonly="readonly"/></td>
+	<td><input type="text" id="observableProperty" name="observableProperty" onkeyup="showHint(this.value)"/></td>
+</tr>
+<tr>
+	<td><input type="text" value="Please input the UOM:" readonly="readonly"/></td>
+	<td><input type="text" id="uom" name="uom"/></td>
+</tr>
+<tr>
+	<td><input type="submit" name="register" value="Register"/></td>
+</tr>
+</table>
 </form>
 <script type="text/javascript" src="jquery-1.9.1.min.js"></script>
 <script type="text/javascript">

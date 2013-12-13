@@ -40,30 +40,21 @@ public class QueryServiceImp {
 	}
 	
 	public synchronized void getNewData(HttpServletRequest request,HttpServletResponse response){
-		//获取当前DB数据
-		Query<Data> datas = MongoUtil.ds.createQuery(Data.class);
-		LinkedList<Data> newDatas = new LinkedList<Data>();
-		for(Data data:datas.fetch()){
-			newDatas.add(data);
-		}		
 		HttpSession session = request.getSession();
 		@SuppressWarnings("unchecked")
 		LinkedList<Data> oldDatas = (LinkedList<Data>)session.getAttribute("AllDatas");
 		
 		int DataCount = oldDatas.size();
-		int newDataCount = newDatas.size()-DataCount;
-//		request.setAttribute("NewDataCount", newDataCount);
+		//获取当前DB Data数量
+		int newDataCount = (int) (MongoUtil.ds.createQuery(Data.class).countAll()-DataCount);
 		session.setAttribute("NewDataCount", newDataCount);
 		if(newDataCount==0){
 			System.out.println("没有更新!!!");
 		}else{
 			System.out.println("Data更新数: "+newDataCount);
-			request.setAttribute("NewData",newDatas.removeAll(oldDatas));
 		}
-
 	}
-
-
+	
 	public LinkedList<Data> getDatalist() {
 		return datalist;
 	}
