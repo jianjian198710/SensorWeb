@@ -143,6 +143,13 @@ public class Controller extends HttpServlet {
 			RequestDispatcher dispathcer = request.getRequestDispatcher("DetailedData.jsp");
 			dispathcer.forward(request, response);
 		}
+		if(request.getParameter("go")!=null){
+			int page = Integer.parseInt(request.getParameter("page"));
+			System.out.println("要跳转的页数:"+page);
+			qs.pageDisplay(request,response,page);
+			RequestDispatcher dispathcer = request.getRequestDispatcher("DetailedData.jsp");
+			dispathcer.forward(request, response);
+		}
 	}
 
 	/**

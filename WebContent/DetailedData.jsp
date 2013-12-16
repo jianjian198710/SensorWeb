@@ -27,7 +27,7 @@
 			<td><input type="text" value="Value" readonly="readonly"/></td>
 			<td><input type="text" value="Uom" readonly="readonly"/></td>
 		</tr>
-		<c:forEach items="${sessionScope.AllDatas}" var="data">
+		<c:forEach items="${sessionScope.currentPageDatas}" var="data">
 			<tr>
 			<td><input type="text" value="${data.timeStamp}" readonly="readonly"/></td>
 			<td><input type="text" name="sensorId" value="${data.sensorID}" readonly="readonly"/></td>
@@ -37,6 +37,16 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<div>
+	<form action="Controller">
+		Page:<input type="text" name="page" style="width:20px"/>
+		<input type="submit" name="go" value="go"/>
+		CurrentPage:${sessionScope.currentPageNumber}/${sessionScope.pageTotalNumber}
+	</form>
+	<form action="Controller">
+		<input type="submit" name="showAll" value="showAllSensors"/>
+	</form>
+	</div>
 
 </body>
 <script type="text/javascript">
