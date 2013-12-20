@@ -1,7 +1,6 @@
 package sensorweb.service;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -20,8 +19,6 @@ public class QueryServiceImp {
 	private static final int DISPLAY_NUM = 20;
 	
 	
-	private ArrayList<Data> datalist = new ArrayList<>();
-	
 	public QueryServiceImp(HttpServletRequest request, HttpServletResponse response){
 		this.request = request;
 		this.response = response;
@@ -31,14 +28,8 @@ public class QueryServiceImp {
 	
 	public void getAllData(HttpServletRequest request,HttpServletResponse respons){
 		Query<Data> datas = MongoUtil.ds.createQuery(Data.class).order("-timeStamp");
-		for(Data data:datas.fetch()){
-			this.getDatalist().add(data);
-		}		
-		System.out.println("所有的Data: "+getDatalist());
-		request.setAttribute("AllDatas", getDatalist());
-		
 		HttpSession session = request.getSession();
-		session.setAttribute("AllDatas", this.getDatalist());
+		session.setAttribute("AllDatas", datas.asList());
 		
 		//只显示前30条数据
 		session.setAttribute("currentPageDatas",datas.limit(DISPLAY_NUM).asList());
@@ -71,6 +62,9 @@ public class QueryServiceImp {
 		}
 	}
 	
+	/*
+	 * 分页 每页显示20条Data
+	 */
 	public void pageDisplay(HttpServletRequest request,HttpServletResponse response,int page){
 		HttpSession session = request.getSession();
 		@SuppressWarnings("unchecked")
@@ -83,6 +77,10 @@ public class QueryServiceImp {
 			pageTotalNumber = dataTotalNumber/DISPLAY_NUM;
 		}else{
 			pageTotalNumber = dataTotalNumber/DISPLAY_NUM+1;
+		}
+		//输入页数大于范围的话 直接跳转到第一页
+		if(page<=0||page>pageTotalNumber){
+			page=1;
 		}
 		session.setAttribute("pageTotalNumber", pageTotalNumber);
 		session.setAttribute("currentPageNumber", page);
@@ -97,15 +95,12 @@ public class QueryServiceImp {
 			for(int i=(page-1)*DISPLAY_NUM;i<dataTotalNumber;i++){
 				currentPageDatas.add(oldDatas.get(i));
 			}
+			//输入范围错误 直接跳转到第一页
+		}else{
+			for(int i=0;i<20;i++){
+				currentPageDatas.add(oldDatas.get(i));
+			}
 		}
 		session.setAttribute("currentPageDatas", currentPageDatas);
-	}
-	
-	public ArrayList<Data> getDatalist() {
-		return datalist;
-	}
-
-	public void setDatalist(ArrayList<Data> datalist) {
-		this.datalist = datalist;
 	}
 }

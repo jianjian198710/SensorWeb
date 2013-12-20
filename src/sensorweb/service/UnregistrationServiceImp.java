@@ -21,20 +21,25 @@ public class UnregistrationServiceImp {
 	
 	private String sensorID;
 	private Sensor sensor;
+	private Data data;
 	
-	public void unregister(){
+	public String unregister(){
 		sensorID = request.getParameter("sensorID");
 		System.out.println(sensorID);
 		if((sensor = MongoUtil.ds.createQuery(Sensor.class).field("_id").equal(sensorID).get())!=null){
 			MongoUtil.delete(sensor);
-			deleteData(sensorID);
+			if((data = MongoUtil.ds.createQuery(Data.class).field("_id").equal(sensorID).limit(1).get())!=null){
+				deleteData(sensorID);
+			}
 			TCPServer.getInstance().getSensorStatus().put(sensorID, false);
 			//将注销的Sensor从TCPServer的保存表中删除
 			System.out.println("TCPServer中保存的Sensor列表为: "+TCPServer.getInstance().getSensorStatus());
 			System.out.println("注销成功!!!!!!!!!");
+			return "SUCCESS";
 		}
 		else{
 			System.out.println("DB中不存在该Sensor!!!!");
+			return "FAILED";
 		}
 	}
 	
@@ -48,4 +53,5 @@ public class UnregistrationServiceImp {
 		//MongoUtil.datas.remove(data);
 		MongoUtil.ds.delete(MongoUtil.ds.createQuery(Data.class).field("sensorId").equal(sensorID));
 	}
+
 }

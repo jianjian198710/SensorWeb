@@ -47,17 +47,22 @@ public class Controller extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RegistrationServiceImp rig = new RegistrationServiceImp(request,response);
 		//Registration.jsp
+		RegistrationServiceImp rig = new RegistrationServiceImp(request,response);
 		if(request.getParameter("register")!=null&&request.getParameter("register").equals("Register")){
 			rig.register();
 		}
 		//Unregistration.jsp
 		if(request.getParameter("unregister")!=null){
 			UnregistrationServiceImp urig = new UnregistrationServiceImp(request, response);
-			urig.unregister();
-			RequestDispatcher dispathcer = request.getRequestDispatcher("UnregistrationSuccess.jsp");
-			dispathcer.forward(request, response);
+			if(urig.unregister().equals("SUCCESS")){
+				RequestDispatcher dispathcer = request.getRequestDispatcher("UnregistrationSuccess.jsp");
+				dispathcer.forward(request, response);
+			}else{
+				RequestDispatcher dispathcer = request.getRequestDispatcher("UnregistrationFailed.jsp");
+				dispathcer.forward(request, response);
+			}
+
 		}
 		//RegisterSuccess.jsp
 		if(request.getParameter("startNow")!=null){
@@ -81,6 +86,8 @@ public class Controller extends HttpServlet {
 			} catch (JAXBException e) {
 				e.printStackTrace();
 			}
+			RequestDispatcher dispathcer = request.getRequestDispatcher("RegistrationSuccess.jsp");
+			dispathcer.forward(request, response);
 		}
 		//ShowAllSensors.jsp
 		if(request.getParameter("start")!=null&&request.getParameter("start").equals("Start")){
@@ -148,6 +155,11 @@ public class Controller extends HttpServlet {
 			System.out.println("要跳转的页数:"+page);
 			qs.pageDisplay(request,response,page);
 			RequestDispatcher dispathcer = request.getRequestDispatcher("DetailedData.jsp");
+			dispathcer.forward(request, response);
+		}
+		//ToHome
+		if(request.getParameter("backToHome")!=null){
+			RequestDispatcher dispathcer = request.getRequestDispatcher("Welcome.jsp");
 			dispathcer.forward(request, response);
 		}
 	}

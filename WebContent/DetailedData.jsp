@@ -27,8 +27,15 @@
 			<td><input type="text" value="Value" readonly="readonly"/></td>
 			<td><input type="text" value="Uom" readonly="readonly"/></td>
 		</tr>
-		<c:forEach items="${sessionScope.currentPageDatas}" var="data">
-			<tr>
+		<c:forEach items="${sessionScope.currentPageDatas}" var="data" varStatus="status">
+		<c:choose>
+			<c:when test="${status.index%2==0}">
+      			<tr bgcolor="#DFDFDF">
+            </c:when>
+            <c:otherwise>
+       			 <tr bgcolor="#BFDFFF">
+            </c:otherwise>
+            </c:choose>
 			<td><input type="text" value="${data.timeStamp}" readonly="readonly"/></td>
 			<td><input type="text" name="sensorId" value="${data.sensorID}" readonly="readonly"/></td>
 			<td><input type="text" value="${data.observableProperty}" readonly="readonly"/></td>
@@ -37,17 +44,14 @@
 			</tr>
 		</c:forEach>
 	</table>
-	<div>
+	<div style="margin-left:5px">
 	<form action="Controller">
 		Page:<input type="text" name="page" style="width:20px"/>
 		<input type="submit" name="go" value="go"/>
 		CurrentPage:${sessionScope.currentPageNumber}/${sessionScope.pageTotalNumber}
-	</form>
-	<form action="Controller">
-		<input type="submit" name="showAll" value="showAllSensors"/>
+		<input type="submit" name="showAll" value="showAllSensors" style="margin-left:5px"/>
 	</form>
 	</div>
-
 </body>
 <script type="text/javascript">
 var xmlrequest;
@@ -117,6 +121,10 @@ function addLine(){
 function resetLine(){
 	document.getElementById("newNumber").style.background="none repeat scroll 0 0 #FEFDED";
  	document.getElementById("newNumber").style.textDecoration="none"; 
+}
+
+function changeColor(){
+	
 }
 </script>
 </html>

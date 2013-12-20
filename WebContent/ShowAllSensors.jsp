@@ -9,11 +9,12 @@
     <style type="text/css">
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
-      #map-canvas { height: 50% ; postion:absolute; top:100px; width:100%}
+      #map-canvas { height: 50%;width:750px;margin:5px}
     </style>
 <title>ShowALLSensor</title>
 </head>
 <body>
+	<div>
 	<form action="Controller">
 	<table>
 		<tr>
@@ -26,7 +27,7 @@
 		</tr>	
 		<c:forEach items="${sessionScope.AllSensors}" var="sensor">
 			<tr>
-			<td><div><input type="checkbox" name="sid" value="${sensor.sensorID}"/></div></td>
+			<td><div><input type="checkbox" name="sid" value="${sensor.sensorID}" onchange="changeColor();"/></div></td>
 			<td><input type="text" value="${sensor.sensorID}" readonly="readonly"/></td>
 			
 			<td>
@@ -47,18 +48,21 @@
 			</tr>
 		</c:forEach>
 	</table>
-		<div>
+		<div style="margin:5px">
 		<input type="submit" name="start" value="Start"/>
 		<input type="submit" name="stop" value="Stop"/>
 		<input type="submit" name="startAll" value="StartAll"/>
 		<input type="submit" name="stopAll" value="StopAll"/>
 		<input type="submit" name="detailedData" value="Detail"/>
+		<input type="submit" name="backToHome" value="BackToHome"/>
 		</div>
 	</form>
+<!-- 	<div>
 	<input type="button" id="showMap" name="showMap" value="showMap" onclick="showMap();" />
-	<br/>
-	<div id="map-canvas" style="display:block">
+	</div> -->
 	</div>
+	<br/>
+	<div id="map-canvas" style="display:block"></div>
 </body>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
 <script type="text/javascript">
@@ -139,6 +143,18 @@ function initialize() {
 }
 /* 	var canvas = document.getElementById("showMap"); */
 google.maps.event.addDomListener(window, 'load', initialize);
+
+
+function changeColor(){
+	for(var i=0;i<sensorids.length;i++){
+		if(sensorids[i].checked==true){
+			sensorids[i].parentNode.parentNode.parentNode.style.backgroundColor="#80BFFF";
+		}else{
+			sensorids[i].parentNode.parentNode.parentNode.style.backgroundColor="white";
+		}
+	}
+}
+
 
 /* var xmlrequest;
 function createXMLHttpRequest()

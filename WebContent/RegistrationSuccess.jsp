@@ -32,6 +32,9 @@ Success Registration!!!
 	<input type="hidden" name="observableProperty" value="${param.observableProperty}"/>
 	<input type="hidden" name="uom" value="${param.uom}"/>
 	</div>
+	<div>
+	<input type="submit" name="backToHome" value="BackToHome"/>
+	</div>
 </form>
 </body>
 </html>

@@ -4,11 +4,11 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>UnregistrationSuccess</title>
+<title>AlreadyRegister</title>
 </head>
 <body>
+The Sensor is already registered!
 <form action="Controller">
-	Unregistration Successfully!
 	<input type="submit" name="backToHome" value="BackToHome" />
 </form>
 </body>
