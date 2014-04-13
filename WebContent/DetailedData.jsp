@@ -6,7 +6,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <style type="text/css">
-      #newNumber { background:none repeat scroll 0 0 #FEFDED;border:1px solid #F9F2A7;color:#F48C12;display:block;text-align:center;display:none;width:65%}
+      #newNumber { background:none repeat scroll 0 0 #FEFDED;border:1px solid #F9F2A7;color:#F48C12;display:block;text-align:center;display:none;width:63.5%}
     </style>
 <title>DetailedData</title>
 </head>

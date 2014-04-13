@@ -3,10 +3,10 @@
   <display-name>SensorWeb</display-name>
   <welcome-file-list>
     <welcome-file>Welcome.html</welcome-file>
-    <welcome-file>index.htm</welcome-file>
-    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>Welcome.htm</welcome-file>
+    <welcome-file>Welcome.jsp</welcome-file>
     <welcome-file>Welcome.html</welcome-file>
-    <welcome-file>default.htm</welcome-file>
-    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>Welcome.htm</welcome-file>
+    <welcome-file>Welcome.jsp</welcome-file>
   </welcome-file-list>
 </web-app>

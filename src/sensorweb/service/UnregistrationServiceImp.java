@@ -1,6 +1,8 @@
 package sensorweb.service;
 
 
+import java.io.File;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -28,6 +30,7 @@ public class UnregistrationServiceImp {
 		System.out.println(sensorID);
 		if((sensor = MongoUtil.ds.createQuery(Sensor.class).field("_id").equal(sensorID).get())!=null){
 			MongoUtil.delete(sensor);
+			deleteSensorMl(sensorID);
 			if((data = MongoUtil.ds.createQuery(Data.class).field("_id").equal(sensorID).limit(1).get())!=null){
 				deleteData(sensorID);
 			}
@@ -52,6 +55,13 @@ public class UnregistrationServiceImp {
 		//data.put("sensor.$id",sensorID);
 		//MongoUtil.datas.remove(data);
 		MongoUtil.ds.delete(MongoUtil.ds.createQuery(Data.class).field("sensorId").equal(sensorID));
+	}
+	
+	public synchronized void deleteSensorMl(String sensorID){
+		File file = new File("H:/Developer/Java work space/SensorWeb/sensorml/"+sensorID+".xml");
+		if(file.exists()){
+			file.delete();
+		}
 	}
 
 }

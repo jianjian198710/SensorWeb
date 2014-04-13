@@ -186,7 +186,7 @@ public class CreateSensorMLServiceImp {
 		StringWriter sw = new StringWriter();
 		m.marshal(sensorML, sw);
 		
-		String filename = "C:/WorkSpace/SensorWeb/sensorml/"+sensorID+".xml";
+		String filename = "H:/Developer/Java work space/SensorWeb/sensorml/"+sensorID+".xml";
 		File file = new File(filename);
 		System.out.println(file.getCanonicalPath());
 		if(file.exists()){

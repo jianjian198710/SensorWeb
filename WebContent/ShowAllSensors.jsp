@@ -9,7 +9,7 @@
     <style type="text/css">
       html { height: 100% }
       body { height: 100%; margin: 0; padding: 0 }
-      #map-canvas { height: 50%;width:750px;margin:5px}
+      #map-canvas { height: 50%;width:810px;margin:5px}
     </style>
 <title>ShowALLSensor</title>
 </head>
@@ -75,26 +75,23 @@ function showMap(){
 } 
 
 var sensorids = document.getElementsByName("sid");
-var status = document.getElementsByName("status");
 
 function initialize() {
 	  console.log("Start to get postion");
 	  var eastings = document.getElementsByName("easting");
 	  var northings = document.getElementsByName("northing");
-	  console.log(sensorids);
-	  console.log(status);
-	  console.log(eastings);
-	  console.log(northings);
+	  var status = document.getElementsByName("status");
 	  
 	  var easting = Number(eastings[0].value);
 	  var northing = Number(northings[0].value);
+	  console.log("status:"+status[0].value);
 	  console.log("easting:"+easting);
 	  console.log("northing:"+northing);
 	  
 	  var myLatlng = new google.maps.LatLng(northing,easting);  
 
 	  var mapOptions = {
-	    zoom: 4,
+	    zoom: 10,
 	    center: myLatlng
 	  };
 	  var map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);

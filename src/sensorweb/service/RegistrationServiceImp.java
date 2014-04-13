@@ -89,9 +89,11 @@ public class RegistrationServiceImp {
 		sensors = this.getAllSensorsFromDB();
 		HttpSession session = request.getSession();
 		session.setAttribute("AllSensors", sensors);
-		if(TCPServer.getInstance().getSensorStatus().isEmpty()){
+		if(TCPServer.getInstance().getSensorStatus().size()!=this.getSensors().size()){
 			for(Sensor sensor:sensors){
-				TCPServer.getInstance().getSensorStatus().put(sensor.getSensorID(), false);
+				if(!TCPServer.getInstance().getSensorStatus().containsKey(sensor.getSensorID())){
+					TCPServer.getInstance().getSensorStatus().put(sensor.getSensorID(), false);
+				}
 			}
 		}
 		session.setAttribute("SensorStatus", TCPServer.getInstance().getSensorStatus());
